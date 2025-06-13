@@ -1,0 +1,23 @@
+{
+  "name": "kudos-board",
+  "version": "1.0.0",
+  "description": "Kudos board application enabling users to create, edit, and delete kudos boards, along with creating, editing, deleting, and commenting on kudos board cards",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dante-Capobianco/kudos-board.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Dante-Capobianco/kudos-board/issues"
+  },
+  "homepage": "https://github.com/Dante-Capobianco/kudos-board#readme",
+  "dependencies": {
+    "express": "^5.1.0"
+  }
+}
