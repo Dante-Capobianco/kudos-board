@@ -101,11 +101,43 @@ footer {
   padding: 0 20px 0 20px;
 }
 
+.sidebar-container {
+  width: 20vw;
+  height: 75vh;
+  background-color: #464953;
+  position: absolute;
+  border-radius: 0 10px 10px 0;
+  transition: left 0.5s ease;
+  z-index: 1;
+}
+
+.sidebar-options {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+}
+
+.sidebar-option {
+  padding: 10px 0 10px 0;
+  margin: 30px 0 30px 0;
+  font-size: 18px;
+  color: white;
+  cursor: pointer;
+  transition: scale 0.3s ease;
+}
+
+.sidebar-option:hover,
+.current-page {
+  color: #e8e8e8;
+  scale: 1.2;
+}
+
 .board-list {
   display: flex;
-  justify-content: space-evenly;
+  justify-content: flex-start;
+  gap: 1vw;
   flex-wrap: wrap;
-  padding: 20px 0 20px 0;
+  padding: 20px 2vw 20px 2vw;
 }
 
 .board {
@@ -121,7 +153,6 @@ footer {
   justify-content: flex-start;
   align-items: center;
   overflow: hidden;
-  margin: 5px 0 5px 0;
 }
 
 .board:hover,

@@ -8,10 +8,16 @@ function App() {
   const titleIconSize = "40px";
   const submit = "submit";
   const kudosBoardListHeight = window.innerHeight * 0.75; // 75vh
+  const all = "All";
+  const recent = "Recent";
+  const celebration = "Celebration";
+  const thankYou = "Thank You";
+  const inspiration = "Inspiration";
 
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [searchQueryToSubmit, setSearchQueryToSubmit] = useState("");
+  const [currentPage, setCurrentPage] = useState(all);
   const [footerHeight, setFooterHeight] = useState(0);
 
   // On initial render, use header/banner, tile list, and window heights to dynamically set height of footer to be responsive
@@ -55,7 +61,7 @@ function App() {
           />
         </h1>
         <p style={{ fontFamily: "fantasy" }}>
-          Give a kudos, get a kudos... kudos all around!
+          Give kudos, get kudos... kudos all around!
         </p>
 
         <section className="search-sort-container">
@@ -92,8 +98,66 @@ function App() {
           </form>
         </section>
       </header>
-      <main style={{height: kudosBoardListHeight}}>
-        <KudosBoardList />
+
+      <main style={{ height: kudosBoardListHeight }}>
+        <nav
+          className="sidebar-container"
+          style={{
+            left: isSideBarOpen ? 0 : "-20vw",
+            boxShadow: isSideBarOpen ? "20px 0px 40px black" : "",
+          }}
+        >
+          <ul className="sidebar-options">
+            <li
+              className={`sidebar-option ${
+                currentPage === all ? "current-page" : ""
+              }`}
+              onClick={() => setCurrentPage(all)}
+            >
+              {all}
+            </li>
+            <li
+              className={`sidebar-option ${
+                currentPage === recent ? "current-page" : ""
+              }`}
+              onClick={() => setCurrentPage(recent)}
+            >
+              {recent}
+            </li>
+            <li
+              className={`sidebar-option ${
+                currentPage === celebration ? "current-page" : ""
+              }`}
+              onClick={() => setCurrentPage(celebration)}
+            >
+              {celebration}
+            </li>
+            <li
+              className={`sidebar-option ${
+                currentPage === thankYou ? "current-page" : ""
+              }`}
+              onClick={() => setCurrentPage(thankYou)}
+            >
+              {thankYou}
+            </li>
+            <li
+              className={`sidebar-option ${
+                currentPage === inspiration ? "current-page" : ""
+              }`}
+              onClick={() => setCurrentPage(inspiration)}
+            >
+              {inspiration}
+            </li>
+          </ul>
+        </nav>
+        <KudosBoardList
+          currentPage={currentPage}
+          all={all}
+          recent={recent}
+          celebration={celebration}
+          thankYou={thankYou}
+          inspiration={inspiration}
+        />
       </main>
 
       <footer style={{ height: footerHeight }}>
