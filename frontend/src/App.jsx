@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./App.css";
 
 function App() {
@@ -6,10 +6,21 @@ function App() {
   const titleIconAlt = "Kudos medal icon";
   const titleIconSize = "40px";
   const submit = "submit";
+  const kudosBoardListHeight = window.innerHeight * 0.75; // 75vh
 
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const [searchQueryToSubmit, setSearchQueryToSubmit] = useState("");
+  const [footerHeight, setFooterHeight] = useState(0);
+
+  // On initial render, use header/banner, tile list, and window heights to dynamically set height of footer to be responsive
+  useEffect(() => {
+    let height =
+      window.innerHeight -
+      document.getElementById("app-header")?.offsetHeight -
+      kudosBoardListHeight;
+    setFooterHeight(height > 50 ? height : 50);
+  }, []);
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -25,8 +36,8 @@ function App() {
   };
 
   return (
-    <div className="app">
-      <header>
+    <div>
+      <header id="app-header">
         <h1>
           <img
             className="header-img"
@@ -80,7 +91,12 @@ function App() {
           </form>
         </section>
       </header>
-      <main></main>
+      <main style={{height: kudosBoardListHeight}}></main>
+
+      <footer style={{ height: footerHeight }}>
+        <h4>By: Dante Capobianco</h4>
+        <h4>&copy; 2025 Kudos Board</h4>
+      </footer>
     </div>
   );
 }
