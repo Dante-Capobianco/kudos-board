@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./App.css";
+import KudosBoardList from "./components/KudosBoardList";
 
 function App() {
   const titleIconSrc = "/kudos.png";
@@ -91,7 +92,9 @@ function App() {
           </form>
         </section>
       </header>
-      <main style={{height: kudosBoardListHeight}}></main>
+      <main style={{height: kudosBoardListHeight}}>
+        <KudosBoardList />
+      </main>
 
       <footer style={{ height: footerHeight }}>
         <h4>By: Dante Capobianco</h4>

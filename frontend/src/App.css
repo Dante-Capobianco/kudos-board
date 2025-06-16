@@ -85,6 +85,11 @@ h1 {
   border: 2px solid gray;
 }
 
+main {
+  height: 75vh;
+  overflow: auto;
+}
+
 footer {
   box-shadow: 0px -10px 10px gray;
   background-color: #282c34;
@@ -94,4 +99,42 @@ footer {
   justify-content: space-between;
   align-items: center;
   padding: 0 20px 0 20px;
+}
+
+.board-list {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  padding: 20px 0 20px 0;
+}
+
+.board {
+  width: 23vw;
+  height: 55vh;
+  background-color: rgb(235, 240, 249);
+  border: 2px solid #282c34;
+  border-radius: 20px;
+  transition: box-shadow 0.3s ease-in-out, scale 0.3s ease-in-out;
+  box-shadow: 0 0 0 darkgray;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow: hidden;
+  margin: 5px 0 5px 0;
+}
+
+.board:hover,
+.board:focus {
+  cursor: pointer;
+  background-color: rgb(207, 217, 237);
+  box-shadow: 10px 10px 20px gray;
+  scale: 1.04;
+}
+
+.board-img {
+  height: 60%;
+  width: auto;
+  border-radius: 20px;
+  padding-top: 5px;
 }
