@@ -51,7 +51,7 @@ const KudosBoardList = (props) => {
 
   return (
     <section
-      className="board-list"
+      className="board-card-list"
       onMouseEnter={() => props.setIsSideBarOpen(false)}
     >
       {boardsToDisplay.length > 0 ? (

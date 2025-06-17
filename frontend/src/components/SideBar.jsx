@@ -3,7 +3,8 @@ import { useEffect } from "react";
 const SideBar = (props) => {
   useEffect(() => {
     props.setIsHomePageOpen(true);
-  }, [])
+    props.setModalToOpen("");
+  }, []);
 
   return (
     <nav
