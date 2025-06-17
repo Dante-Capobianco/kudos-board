@@ -32,20 +32,28 @@ const KudosBoardList = (props) => {
         break;
     }
 
+    filterBySearchTerm(newBoardsToDisplay);
+  };
+
+  const filterBySearchTerm = (newBoardsToDisplay) => {
     if (props.searchQueryToSubmit) {
       newBoardsToDisplay = newBoardsToDisplay.filter((board) =>
         board.title.includes(props.searchQueryToSubmit)
       );
     }
+
     setBoardsToDisplay(newBoardsToDisplay);
-  };
+  }
 
   useEffect(() => {
     updateBoardsToDisplay();
   }, [props.currentPage, props.searchQueryToSubmit]);
 
   return (
-    <section className="board-list">
+    <section
+      className="board-list"
+      onMouseEnter={() => props.setIsSideBarOpen(false)}
+    >
       {boardsToDisplay.length > 0 ? (
         boardsToDisplay.map((board) => (
           <KudosBoard

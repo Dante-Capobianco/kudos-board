@@ -20,7 +20,7 @@ h1 {
   object-fit: contain;
 }
 
-.search-sort-container {
+.search-container {
   display: flex;
   justify-content: center;
   align-items: center;
