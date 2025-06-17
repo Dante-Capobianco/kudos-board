@@ -3,6 +3,8 @@ import "./App.css";
 import KudosBoardList from "./components/KudosBoardList";
 import SearchBar from "./components/SearchBar";
 import SideBar from "./components/SideBar";
+import KudosCardList from "./components/KudosCardList";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   const titleIconSrc = "/kudos.png";
@@ -20,6 +22,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState(all);
   const [searchBarHeight, setSearchBarHeight] = useState(0);
   const [footerHeight, setFooterHeight] = useState(0);
+  const [isHomePageOpen, setIsHomePageOpen] = useState(true);
 
   // On initial render, use header/banner, tile list, and window heights to dynamically set height of footer to be responsive
   useEffect(() => {
@@ -29,7 +32,7 @@ function App() {
       searchBarHeight -
       kudosBoardListHeight;
     setFooterHeight(height > 50 ? height : 50);
-  }, []);
+  }, [searchBarHeight]);
 
   return (
     <div>
@@ -58,30 +61,44 @@ function App() {
           setSearchQueryToSubmit={setSearchQueryToSubmit}
           isSideBarOpen={isSideBarOpen}
           setSearchBarHeight={setSearchBarHeight}
+          isHomePageOpen={isHomePageOpen}
         />
       </header>
 
       <main style={{ height: kudosBoardListHeight }}>
-        <SideBar
-          all={all}
-          recent={recent}
-          celebration={celebration}
-          thankYou={thankYou}
-          inspiration={inspiration}
-          isSideBarOpen={isSideBarOpen}
-          currentPage={currentPage}
-          setCurrentPage={setCurrentPage}
-        />
-        <KudosBoardList
-          currentPage={currentPage}
-          all={all}
-          recent={recent}
-          celebration={celebration}
-          thankYou={thankYou}
-          inspiration={inspiration}
-          searchQueryToSubmit={searchQueryToSubmit}
-          setIsSideBarOpen={setIsSideBarOpen}
-        />
+        <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  <SideBar
+                    all={all}
+                    recent={recent}
+                    celebration={celebration}
+                    thankYou={thankYou}
+                    inspiration={inspiration}
+                    isSideBarOpen={isSideBarOpen}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    setIsHomePageOpen={setIsHomePageOpen}
+                  />
+                  <KudosBoardList
+                    currentPage={currentPage}
+                    all={all}
+                    recent={recent}
+                    celebration={celebration}
+                    thankYou={thankYou}
+                    inspiration={inspiration}
+                    searchQueryToSubmit={searchQueryToSubmit}
+                    setIsSideBarOpen={setIsSideBarOpen}
+                  />
+                </>
+              }
+            />
+            <Route path="/board/:boardId" element={<KudosCardList setIsHomePageOpen={setIsHomePageOpen} />} />
+          </Routes>
+        </BrowserRouter>
       </main>
 
       <footer style={{ height: footerHeight }}>

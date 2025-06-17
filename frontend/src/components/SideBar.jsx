@@ -1,4 +1,10 @@
+import { useEffect } from "react";
+
 const SideBar = (props) => {
+  useEffect(() => {
+    props.setIsHomePageOpen(true);
+  }, [])
+
   return (
     <nav
       className="sidebar-container"

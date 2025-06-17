@@ -18,11 +18,13 @@ const SearchBar = (props) => {
   };
 
   useEffect(() => {
-    props.setSearchBarHeight(document.getElementById("search-container")?.offsetHeight)
-  }, [])
+    props.setSearchBarHeight(
+      document.getElementById("search-container")?.offsetHeight
+    );
+  }, [props.isHomePageOpen]);
 
   return (
-    <section id="search-container" className="search-container">
+    <section id="search-container" className="search-container" style={props.isHomePageOpen ? {} : {display: "none"}}>
       <span
         class="sidebar-icon material-symbols-outlined"
         onClick={() => props.setIsSideBarOpen(!props.isSideBarOpen)}

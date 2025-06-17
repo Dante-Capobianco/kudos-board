@@ -62,6 +62,7 @@ const KudosBoardList = (props) => {
             alt={`${board.title} Image`}
             title={board.title}
             category={board.category}
+            id={board.id}
           />
         ))
       ) : (
