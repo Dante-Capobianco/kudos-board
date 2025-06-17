@@ -97,7 +97,10 @@ function App() {
                     searchQueryToSubmit={searchQueryToSubmit}
                     setIsSideBarOpen={setIsSideBarOpen}
                   />
-                  <AddButton itemToAdd="Board" setModalToOpen={setModalToOpen} />
+                  <AddButton
+                    itemToAdd="Board"
+                    setModalToOpen={setModalToOpen}
+                  />
                 </>
               }
             />
@@ -105,7 +108,10 @@ function App() {
               path="/board/:boardId"
               element={
                 <>
-                  <KudosCardList setIsHomePageOpen={setIsHomePageOpen} setModalToOpen={setModalToOpen} />
+                  <KudosCardList
+                    setIsHomePageOpen={setIsHomePageOpen}
+                    setModalToOpen={setModalToOpen}
+                  />
                   <AddButton itemToAdd="Card" setModalToOpen={setModalToOpen} />
                 </>
               }
@@ -114,7 +120,13 @@ function App() {
         </BrowserRouter>
       </main>
 
-      <Modal modalToOpen={modalToOpen} setModalToOpen={setModalToOpen} />
+      <Modal
+        modalToOpen={modalToOpen}
+        setModalToOpen={setModalToOpen}
+        celebration={celebration}
+        thankYou={thankYou}
+        inspiration={inspiration}
+      />
 
       <footer style={{ height: footerHeight }}>
         <h4>By: Dante Capobianco</h4>
