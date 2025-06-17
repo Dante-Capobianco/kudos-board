@@ -157,6 +157,7 @@ function App() {
           celebration={celebration}
           thankYou={thankYou}
           inspiration={inspiration}
+          searchQueryToSubmit={searchQueryToSubmit}
         />
       </main>
 

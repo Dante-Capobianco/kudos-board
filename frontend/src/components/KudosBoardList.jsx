@@ -7,29 +7,42 @@ const KudosBoardList = (props) => {
   const [boardsToDisplay, setBoardsToDisplay] = useState(kudosBoards);
 
   const updateBoardsToDisplay = () => {
+    let newBoardsToDisplay;
     switch (props.currentPage) {
       case props.all:
-        setBoardsToDisplay(kudosBoards);
+        newBoardsToDisplay = kudosBoards;
         break;
       case props.recent:
         //todo: https://docs.google.com/document/d/1zdT1PrCLJ-UU60-sMpy_jReyd3tehnzBKxdxPFKIO7g/edit?tab=t.0
-        setBoardsToDisplay(kudosBoards);
         break;
       case props.celebration:
-        setBoardsToDisplay(kudosBoards.filter(board => board.category === props.celebration));
+        newBoardsToDisplay = kudosBoards.filter(
+          (board) => board.category === props.celebration
+        );
         break;
       case props.thankYou:
-        setBoardsToDisplay(kudosBoards.filter(board => board.category === props.thankYou));
+        newBoardsToDisplay = kudosBoards.filter(
+          (board) => board.category === props.thankYou
+        );
         break;
       case props.inspiration:
-        setBoardsToDisplay(kudosBoards.filter(board => board.category === props.inspiration));
+        newBoardsToDisplay = kudosBoards.filter(
+          (board) => board.category === props.inspiration
+        );
         break;
     }
-  }
+
+    if (props.searchQueryToSubmit) {
+      newBoardsToDisplay = newBoardsToDisplay.filter((board) =>
+        board.title.includes(props.searchQueryToSubmit)
+      );
+    }
+    setBoardsToDisplay(newBoardsToDisplay);
+  };
 
   useEffect(() => {
     updateBoardsToDisplay();
-  }, [props.currentPage])
+  }, [props.currentPage, props.searchQueryToSubmit]);
 
   return (
     <section className="board-list">
