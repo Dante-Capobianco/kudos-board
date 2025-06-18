@@ -26,6 +26,7 @@ const KudosCardList = (props) => {
             message={card.message}
             upvotes={card.upvotes}
             id={card.id}
+            pinned={card.pinned}
             boardId={boardId}
             PORT={props.PORT}
             BOARD_ENDPOINT={props.BOARD_ENDPOINT}

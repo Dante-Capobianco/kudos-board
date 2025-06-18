@@ -1,4 +1,6 @@
 const KudosCard = (props) => {
+  const PIN_ENDPOINT = "/pin";
+
   const handleUpvote = async () => {
     try {
       const response = await fetch(
@@ -34,8 +36,38 @@ const KudosCard = (props) => {
     } catch (error) {}
   };
 
+  const handlePin = async (event) => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}${props.PORT}${props.BOARD_ENDPOINT}/${
+          props.boardId
+        }${props.CARD_ENDPOINT}${PIN_ENDPOINT}/${props.id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            newPinnedStatus: !props.pinned,
+          }),
+        }
+      );
+      if (response.ok) {
+        props.fetchAllCards();
+      }
+    } catch (error) {}
+  };
+
   return (
     <article className="board-card">
+      <span
+        className={`${
+          props.pinned ? "pinned" : ""
+        } card-pin material-symbols-outlined`}
+        onClick={(event) => handlePin(event)}
+      >
+        keep
+      </span>
       <img
         src={props.src}
         alt={props.alt}
@@ -43,7 +75,7 @@ const KudosCard = (props) => {
         style={{ paddingTop: 0 }}
       />
       <h2 className="board-title-card-message card-message">{props.message}</h2>
-      <span style={{height: "5px"}}></span>
+      <span style={{ height: "5px" }}></span>
       <h3 className="upvote-delete upvote" onClick={handleUpvote}>
         <span className="material-symbols-outlined">thumb_up</span> Upvote:{" "}
         {props.upvotes}
