@@ -345,7 +345,7 @@ footer {
   margin-bottom: 0;
 }
 
-.card-category {
+.board-category {
   margin-top: 0;
 }
 
@@ -356,9 +356,18 @@ footer {
   align-items: center;
 }
 
+.upvote {
+  margin-top: 0;
+}
+
 .upvote:hover,
 .upvote:focus {
   cursor: pointer;
   color: rgb(3, 3, 126);
+  scale: 1.1;
+}
+
+.delete-card:hover,
+.delete-card:focus {
   scale: 1.1;
 }

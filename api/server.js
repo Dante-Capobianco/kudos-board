@@ -62,11 +62,22 @@ server.get("/board/:id/card", async (req, res, next) => {
   }
 });
 
-server.patch("/board/:id/card", async (req, res, next) => {
-  const {id, newUpvoteCount} = req.body;
+server.patch("/board/:id/card/:cardId", async (req, res, next) => {
+  const cardId = Number(req.params.cardId);
+  const { newUpvoteCount } = req.body;
 
   try {
-    await Card.updateUpvote(id, newUpvoteCount);
+    await Card.updateUpvote(cardId, newUpvoteCount);
+    res.status(204).end();
+  } catch (err) {
+    next(err);
+  }
+});
+
+server.delete("/board/:id/card/:cardId", async (req, res, next) => {
+  const cardId = Number(req.params.cardId);
+  try {
+    await Card.delete(cardId);
     res.status(204).end();
   } catch (err) {
     next(err);

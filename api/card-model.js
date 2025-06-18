@@ -22,4 +22,9 @@ module.exports = {
     });
     return;
   },
+
+  async delete(cardId) {
+    await prisma.card.delete({ where: { id: cardId } });
+    return;
+  },
 };
