@@ -48,6 +48,7 @@ function App() {
   };
 
   const fetchAllCards = async () => {
+    if (!selectedBoardId) return;
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BASE_URL}${PORT}${BOARD_ENDPOINT}/${selectedBoardId}${CARD_ENDPOINT}`,
@@ -62,6 +63,11 @@ function App() {
       }
     } catch (error) {}
   };
+
+  const returnToHomePage = () => {
+    setAllCards([]);
+    setSelectedBoardId(null);
+  }
 
   const routes = createBrowserRouter([
     {
@@ -94,7 +100,7 @@ function App() {
       path: "/board/:boardId",
       element: (
         <>
-          <Link to="/" onClick={() => setAllCards([])} className="back-link">
+          <Link to="/" onClick={returnToHomePage} className="back-link">
             <span className="modal-exit material-symbols-outlined">
               arrow_back
             </span>
@@ -103,7 +109,9 @@ function App() {
             setIsHomePageOpen={setIsHomePageOpen}
             setModalToOpen={setModalToOpen}
             fetchAllCards={fetchAllCards}
+            allCards={allCards}
             setSelectedBoardId={setSelectedBoardId}
+            selectedBoardId={selectedBoardId}
           />
           <AddButton itemToAdd="Card" setModalToOpen={setModalToOpen} />
         </>

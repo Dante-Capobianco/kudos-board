@@ -27,7 +27,7 @@ const KudosBoard = (props) => {
 
   return (
     <article
-      className="board"
+      className="board-card"
       onClick={(event) =>
         event.target.className !== "delete-container"
           ? navigateToBoardPage()
@@ -35,8 +35,8 @@ const KudosBoard = (props) => {
       }
     >
       <img src={props.src} alt={props.alt} className="board-img" />
-      <h2>{props.title}</h2>
-      <h3>Category: {props.category}</h3>
+      <h2 className="board-title-card-message board-title">{props.title}</h2>
+      <h3 className="card-category">Category: {props.category}</h3>
       <h3 className="delete-container" onClick={deleteBoard}>
         <span className="material-symbols-outlined">delete</span>
         Delete

@@ -1,17 +1,36 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import KudosCard from "./KudosCard";
 
 const KudosCardList = (props) => {
   const { boardId } = useParams();
 
   useEffect(() => {
-    props.fetchAllCards();
     props.setIsHomePageOpen(false);
     props.setModalToOpen("");
     props.setSelectedBoardId(boardId);
-  }, [])
-  
-  return <div className="board-card-list">{boardId}</div>;
+  }, []);
+
+  useEffect(() => {
+    props.fetchAllCards();
+  }, [props.selectedBoardId]);
+
+  return (
+    <section className="board-card-list">
+      {props.allCards.length > 0 ? (
+        props.allCards.map((card) => (
+          <KudosCard
+            key={card.id}
+            src={card.gif}
+            alt={`${card.message} Image`}
+            message={card.message}
+          />
+        ))
+      ) : (
+        <h2 style={{ marginTop: "5%" }}>No cards found - create one!</h2>
+      )}
+    </section>
+  );
 };
 
 export default KudosCardList;
