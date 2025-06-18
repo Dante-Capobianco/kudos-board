@@ -1,5 +1,6 @@
 import KudosBoard from "./KudosBoard.jsx";
 import { useState, useEffect } from "react";
+import {PageType} from "../utils/enums"
 
 const KudosBoardList = (props) => {
   const [boardsToDisplay, setBoardsToDisplay] = useState(props.allBoards);
@@ -7,25 +8,25 @@ const KudosBoardList = (props) => {
   const updateBoardsToDisplay = () => {
     let newBoardsToDisplay;
     switch (props.currentPage) {
-      case props.all:
+      case PageType.ALL:
         newBoardsToDisplay = props.allBoards;
         break;
-      case props.recent:
+      case PageType.RECENT:
         //todo: https://docs.google.com/document/d/1zdT1PrCLJ-UU60-sMpy_jReyd3tehnzBKxdxPFKIO7g/edit?tab=t.0
         break;
-      case props.celebration:
+      case PageType.CELEBRATION:
         newBoardsToDisplay = props.allBoards.filter(
-          (board) => board.category === props.celebration
+          (board) => board.category === PageType.CELEBRATION
         );
         break;
-      case props.thankYou:
+      case PageType.THANK_YOU:
         newBoardsToDisplay = props.allBoards.filter(
-          (board) => board.category === props.thankYou
+          (board) => board.category === PageType.THANK_YOU
         );
         break;
-      case props.inspiration:
+      case PageType.INSPIRATION:
         newBoardsToDisplay = props.allBoards.filter(
-          (board) => board.category === props.inspiration
+          (board) => board.category === PageType.INSPIRATION
         );
         break;
     }
@@ -60,12 +61,15 @@ const KudosBoardList = (props) => {
         boardsToDisplay.map((board) => (
           <KudosBoard
             key={board.id}
-            src="/placeholder.png"
+            src={`https://picsum.photos/id/${board.id}/200/200`}
             alt={`${board.title} Image`}
             title={board.title}
             category={board.category}
             id={board.id}
             author={board.author}
+            PORT={props.PORT}
+            BOARD_ENDPOINT={props.BOARD_ENDPOINT}
+            fetchAllBoards={props.fetchAllBoards}
           />
         ))
       ) : (

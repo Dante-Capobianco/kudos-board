@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import {PageType} from "../utils/enums"
 
 const SideBar = (props) => {
   useEffect(() => {
@@ -17,43 +18,43 @@ const SideBar = (props) => {
       <ul className="sidebar-options">
         <li
           className={`sidebar-option ${
-            props.currentPage === props.all ? "current-page" : ""
+            props.currentPage === PageType.ALL ? "current-page" : ""
           }`}
-          onClick={() => props.setCurrentPage(props.all)}
+          onClick={() => props.setCurrentPage(PageType.ALL)}
         >
-          {props.all}
+          {PageType.ALL}
         </li>
         <li
           className={`sidebar-option ${
-            props.currentPage === props.recent ? "current-page" : ""
+            props.currentPage === PageType.RECENT ? "current-page" : ""
           }`}
-          onClick={() => props.setCurrentPage(props.recent)}
+          onClick={() => props.setCurrentPage(PageType.RECENT)}
         >
-          {props.recent}
+          {PageType.RECENT}
         </li>
         <li
           className={`sidebar-option ${
-            props.currentPage === props.celebration ? "current-page" : ""
+            props.currentPage === PageType.CELEBRATION ? "current-page" : ""
           }`}
-          onClick={() => props.setCurrentPage(props.celebration)}
+          onClick={() => props.setCurrentPage(PageType.CELEBRATION)}
         >
-          {props.celebration}
+          {PageType.CELEBRATION}
         </li>
         <li
           className={`sidebar-option ${
-            props.currentPage === props.thankYou ? "current-page" : ""
+            props.currentPage === PageType.THANK_YOU ? "current-page" : ""
           }`}
-          onClick={() => props.setCurrentPage(props.thankYou)}
+          onClick={() => props.setCurrentPage(PageType.THANK_YOU)}
         >
-          {props.thankYou}
+          {PageType.THANK_YOU}
         </li>
         <li
           className={`sidebar-option ${
-            props.currentPage === props.inspiration ? "current-page" : ""
+            props.currentPage === PageType.INSPIRATION ? "current-page" : ""
           }`}
-          onClick={() => props.setCurrentPage(props.inspiration)}
+          onClick={() => props.setCurrentPage(PageType.INSPIRATION)}
         >
-          {props.inspiration}
+          {PageType.INSPIRATION}
         </li>
       </ul>
     </nav>

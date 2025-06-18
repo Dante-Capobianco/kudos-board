@@ -11,5 +11,10 @@ module.exports = {
   async findAll() {
     const allBoards = await prisma.board.findMany();
     return allBoards;
-  }
+  },
+
+  async delete(id) {
+    await prisma.board.delete({ where: { id: id } });
+    return;
+  },
 };

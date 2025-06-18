@@ -28,6 +28,16 @@ server.get("/board", async (req, res, next) => {
   }
 });
 
+server.delete("/board", async (req, res, next) => {
+  const id = req.body.id;
+  try {
+    await Board.delete(id);
+    res.status(204).end();
+  } catch (err) {
+    next(err);
+  }
+});
+
 server.use("/", (req, res, next) => {
   next({ status: 404, message: "Endpoint not found" });
 });

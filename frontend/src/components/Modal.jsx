@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { PageType } from "../utils/enums";
 
 const Modal = (props) => {
   const [title, setTitle] = useState("");
@@ -13,7 +14,7 @@ const Modal = (props) => {
       if (author) newBoard.author = author;
 
       const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}${props.port}${props.boardEndpoint}`,
+        `${import.meta.env.VITE_BASE_URL}${props.PORT}${props.BOARD_ENDPOINT}`,
         {
           method: "POST",
           headers: {
@@ -83,9 +84,9 @@ const Modal = (props) => {
               <option value="" disabled>
                 Choose a category
               </option>
-              <option value={props.celebration}>{props.celebration}</option>
-              <option value={props.inspiration}>{props.inspiration}</option>
-              <option value={props.thankYou}>{props.thankYou}</option>
+              <option value={PageType.CELEBRATION}>{PageType.CELEBRATION}</option>
+              <option value={PageType.INSPIRATION}>{PageType.INSPIRATION}</option>
+              <option value={PageType.THANK_YOU}>{PageType.THANK_YOU}</option>
             </select>
 
             <label htmlFor="author">Author (optional)</label>
