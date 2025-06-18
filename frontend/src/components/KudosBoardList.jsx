@@ -1,6 +1,6 @@
 import KudosBoard from "./KudosBoard.jsx";
 import { useState, useEffect } from "react";
-import {PageType} from "../utils/enums"
+import { PageType } from "../utils/enums";
 
 const KudosBoardList = (props) => {
   const [boardsToDisplay, setBoardsToDisplay] = useState(props.allBoards);
@@ -12,7 +12,11 @@ const KudosBoardList = (props) => {
         newBoardsToDisplay = props.allBoards;
         break;
       case PageType.RECENT:
-        //todo: https://docs.google.com/document/d/1zdT1PrCLJ-UU60-sMpy_jReyd3tehnzBKxdxPFKIO7g/edit?tab=t.0
+        newBoardsToDisplay = props.allBoards
+          .toSorted(
+            (boardA, boardB) => new Date(boardB.createdAt) - new Date(boardA.createdAt)
+          )
+          .slice(0, 6);
         break;
       case PageType.CELEBRATION:
         newBoardsToDisplay = props.allBoards.filter(
