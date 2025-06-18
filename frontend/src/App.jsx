@@ -6,8 +6,8 @@ import SideBar from "./components/SideBar";
 import KudosCardList from "./components/KudosCardList";
 import AddButton from "./components/AddButton";
 import Modal from "./components/Modal";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import {PageType} from "./utils/enums"
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { PageType } from "./utils/enums";
 
 function App() {
   const TITLE_ICON_SRC = "/kudos.png";
@@ -43,6 +43,45 @@ function App() {
       }
     } catch (error) {}
   };
+
+  const routes = createBrowserRouter([
+    {
+      path: "/",
+      element: (
+        <>
+          <SideBar
+            isSideBarOpen={isSideBarOpen}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            setIsHomePageOpen={setIsHomePageOpen}
+            setModalToOpen={setModalToOpen}
+          />
+          <KudosBoardList
+            currentPage={currentPage}
+            searchQueryToSubmit={searchQueryToSubmit}
+            setIsSideBarOpen={setIsSideBarOpen}
+            allBoards={allBoards}
+            fetchAllBoards={fetchAllBoards}
+            BOARD_ENDPOINT={BOARD_ENDPOINT}
+            PORT={PORT}
+          />
+          <AddButton itemToAdd="Board" setModalToOpen={setModalToOpen} />
+        </>
+      ),
+    },
+    {
+      path: "/board/:boardId",
+      element: (
+        <>
+          <KudosCardList
+            setIsHomePageOpen={setIsHomePageOpen}
+            setModalToOpen={setModalToOpen}
+          />
+          <AddButton itemToAdd="Card" setModalToOpen={setModalToOpen} />
+        </>
+      ),
+    },
+  ]);
 
   // On initial render, use header/banner, tile list, and window heights to dynamically set height of footer to be responsive
   useEffect(() => {
@@ -86,49 +125,7 @@ function App() {
       </header>
 
       <main style={{ height: KUDOS_BOARD_LIST_HEIGHT }}>
-        <BrowserRouter>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <>
-                  <SideBar
-                    isSideBarOpen={isSideBarOpen}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                    setIsHomePageOpen={setIsHomePageOpen}
-                    setModalToOpen={setModalToOpen}
-                  />
-                  <KudosBoardList
-                    currentPage={currentPage}
-                    searchQueryToSubmit={searchQueryToSubmit}
-                    setIsSideBarOpen={setIsSideBarOpen}
-                    allBoards={allBoards}
-                    fetchAllBoards={fetchAllBoards}
-                    BOARD_ENDPOINT={BOARD_ENDPOINT}
-                    PORT={PORT}
-                  />
-                  <AddButton
-                    itemToAdd="Board"
-                    setModalToOpen={setModalToOpen}
-                  />
-                </>
-              }
-            />
-            <Route
-              path="/board/:boardId"
-              element={
-                <>
-                  <KudosCardList
-                    setIsHomePageOpen={setIsHomePageOpen}
-                    setModalToOpen={setModalToOpen}
-                  />
-                  <AddButton itemToAdd="Card" setModalToOpen={setModalToOpen} />
-                </>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
+        <RouterProvider router={routes} />
       </main>
 
       <Modal
