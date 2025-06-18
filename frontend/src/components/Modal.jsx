@@ -5,10 +5,36 @@ const Modal = (props) => {
   const [category, setCategory] = useState("");
   const [author, setAuthor] = useState("");
 
-  const handleSubmit = (event) => {
+  const addBoardEndpoint = "/board/add";
+  const addCardEndpoint = "/card/add";
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    //todo
-  }
+
+    try {
+      const newBoard = { title, category };
+      if (author) newBoard.author = author;
+
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}${props.port}${addBoardEndpoint}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newBoard),
+        }
+      );
+
+      if (!response.ok) {
+        exitModal();
+      }
+
+      const data = await response.json();
+    } catch (error) {
+      exitModal();
+    }
+  };
 
   const exitModal = () => {
     props.setModalToOpen("");
@@ -36,8 +62,11 @@ const Modal = (props) => {
         <h2 className="modal-title">{`Add ${props.modalToOpen}`}</h2>
 
         {props.modalToOpen === "Board" ? (
-          <form className="modal-form">
-            <label for="title">Title</label>
+          <form
+            className="modal-form"
+            onSubmit={(event) => handleSubmit(event)}
+          >
+            <label htmlFor="title">Title</label>
             <input
               id="title"
               type="text"
@@ -45,14 +74,16 @@ const Modal = (props) => {
               placeholder="Enter board title"
               value={title}
               onChange={(event) => setTitle(event.target.value)}
+              required
             />
 
-            <label for="category">Category</label>
+            <label htmlFor="category">Category</label>
             <select
               id="category"
               className="text-input dropdown-input"
               value={category}
               onChange={(event) => setCategory(event.target.value)}
+              required
             >
               <option value="" disabled>
                 Choose a category
@@ -62,7 +93,7 @@ const Modal = (props) => {
               <option value={props.thankYou}>{props.thankYou}</option>
             </select>
 
-            <label for="author">Author (optional)</label>
+            <label htmlFor="author">Author (optional)</label>
             <input
               id="author"
               type="text"
@@ -74,7 +105,6 @@ const Modal = (props) => {
 
             <button
               type="submit"
-              onClick={(event) => handleSubmit(event)}
               className="search-btn modal-btn"
             >{`Create ${props.modalToOpen}`}</button>
           </form>

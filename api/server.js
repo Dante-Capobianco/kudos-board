@@ -1,11 +1,25 @@
 const express = require("express");
 const helmet = require("helmet");
+const cors = require("cors");
+const Board = require("./board-model");
 
 const server = express();
 server.use(helmet());
 server.use(express.json());
+server.use(cors());
 
-server.use("/*splat", (req, res, next) => {
+server.post("/board/add", async (req, res, next) => {
+  const newBoard = req.body;
+
+  try {
+    const created = await Board.create(newBoard);
+    res.status(201).json(created);
+  } catch (err) {
+    next(err);
+  }
+});
+
+server.use("/", (req, res, next) => {
   next({ status: 404, message: "Endpoint not found" });
 });
 

@@ -18,6 +18,7 @@ function App() {
   const celebration = "Celebration";
   const thankYou = "Thank You";
   const inspiration = "Inspiration";
+  const port = 3000;
 
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [searchQueryToSubmit, setSearchQueryToSubmit] = useState("");
@@ -126,6 +127,7 @@ function App() {
         celebration={celebration}
         thankYou={thankYou}
         inspiration={inspiration}
+        port={port}
       />
 
       <footer style={{ height: footerHeight }}>
