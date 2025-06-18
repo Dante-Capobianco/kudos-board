@@ -2,6 +2,7 @@ const express = require("express");
 const helmet = require("helmet");
 const cors = require("cors");
 const Board = require("./board-model");
+const Card = require("./card-model");
 
 const server = express();
 server.use(helmet());
@@ -33,6 +34,29 @@ server.delete("/board", async (req, res, next) => {
   try {
     await Board.delete(id);
     res.status(204).end();
+  } catch (err) {
+    next(err);
+  }
+});
+
+server.post("/board/:id/card", async (req, res, next) => {
+  const boardId = Number(req.params.id);
+  const newCard = req.body;
+
+  try {
+    const created = await Card.create({ ...newCard, boardId });
+    res.status(201).json(created);
+  } catch (err) {
+    next(err);
+  }
+});
+
+server.get("/board/:id/card", async (req, res, next) => {
+  const boardId = Number(req.params.id);
+
+  try {
+    const allCards = await Card.findAll(boardId);
+    res.status(200).json(allCards);
   } catch (err) {
     next(err);
   }

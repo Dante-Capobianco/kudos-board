@@ -6,8 +6,8 @@ import SideBar from "./components/SideBar";
 import KudosCardList from "./components/KudosCardList";
 import AddButton from "./components/AddButton";
 import Modal from "./components/Modal";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import {PageType} from "./utils/enums"
+import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
+import { PageType } from "./utils/enums";
 
 function App() {
   const TITLE_ICON_SRC = "/kudos.png";
@@ -18,6 +18,7 @@ function App() {
   const CARD_ENDPOINT = "/card";
   const PORT = 3000;
   const MIN_FOOTER_HEIGHT = 50;
+  const ERROR_TEXT = "Page Not Found";
 
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [searchQueryToSubmit, setSearchQueryToSubmit] = useState("");
@@ -27,6 +28,8 @@ function App() {
   const [isHomePageOpen, setIsHomePageOpen] = useState(true);
   const [modalToOpen, setModalToOpen] = useState("");
   const [allBoards, setAllBoards] = useState([]);
+  const [allCards, setAllCards] = useState([]);
+  const [selectedBoardId, setSelectedBoardId] = useState(null);
 
   const fetchAllBoards = async () => {
     try {
@@ -43,6 +46,78 @@ function App() {
       }
     } catch (error) {}
   };
+
+  const fetchAllCards = async () => {
+    if (!selectedBoardId) return;
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}${PORT}${BOARD_ENDPOINT}/${selectedBoardId}${CARD_ENDPOINT}`,
+        {
+          method: "GET",
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setAllCards(data);
+      }
+    } catch (error) {}
+  };
+
+  const returnToHomePage = () => {
+    setAllCards([]);
+    setSelectedBoardId(null);
+  }
+
+  const routes = createBrowserRouter([
+    {
+      path: "/",
+      element: (
+        <>
+          <SideBar
+            isSideBarOpen={isSideBarOpen}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            setIsHomePageOpen={setIsHomePageOpen}
+            setModalToOpen={setModalToOpen}
+          />
+          <KudosBoardList
+            currentPage={currentPage}
+            searchQueryToSubmit={searchQueryToSubmit}
+            setIsSideBarOpen={setIsSideBarOpen}
+            allBoards={allBoards}
+            fetchAllBoards={fetchAllBoards}
+            BOARD_ENDPOINT={BOARD_ENDPOINT}
+            PORT={PORT}
+            setSelectedBoardId={setSelectedBoardId}
+          />
+          <AddButton itemToAdd="Board" setModalToOpen={setModalToOpen} />
+        </>
+      ),
+      errorElement: <h2>{ERROR_TEXT}</h2>,
+    },
+    {
+      path: "/board/:boardId",
+      element: (
+        <>
+          <Link to="/" onClick={returnToHomePage} className="back-link">
+            <span className="modal-exit material-symbols-outlined">
+              arrow_back
+            </span>
+          </Link>
+          <KudosCardList
+            setIsHomePageOpen={setIsHomePageOpen}
+            setModalToOpen={setModalToOpen}
+            fetchAllCards={fetchAllCards}
+            allCards={allCards}
+            setSelectedBoardId={setSelectedBoardId}
+            selectedBoardId={selectedBoardId}
+          />
+          <AddButton itemToAdd="Card" setModalToOpen={setModalToOpen} />
+        </>
+      ),
+    },
+  ]);
 
   // On initial render, use header/banner, tile list, and window heights to dynamically set height of footer to be responsive
   useEffect(() => {
@@ -86,49 +161,7 @@ function App() {
       </header>
 
       <main style={{ height: KUDOS_BOARD_LIST_HEIGHT }}>
-        <BrowserRouter>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <>
-                  <SideBar
-                    isSideBarOpen={isSideBarOpen}
-                    currentPage={currentPage}
-                    setCurrentPage={setCurrentPage}
-                    setIsHomePageOpen={setIsHomePageOpen}
-                    setModalToOpen={setModalToOpen}
-                  />
-                  <KudosBoardList
-                    currentPage={currentPage}
-                    searchQueryToSubmit={searchQueryToSubmit}
-                    setIsSideBarOpen={setIsSideBarOpen}
-                    allBoards={allBoards}
-                    fetchAllBoards={fetchAllBoards}
-                    BOARD_ENDPOINT={BOARD_ENDPOINT}
-                    PORT={PORT}
-                  />
-                  <AddButton
-                    itemToAdd="Board"
-                    setModalToOpen={setModalToOpen}
-                  />
-                </>
-              }
-            />
-            <Route
-              path="/board/:boardId"
-              element={
-                <>
-                  <KudosCardList
-                    setIsHomePageOpen={setIsHomePageOpen}
-                    setModalToOpen={setModalToOpen}
-                  />
-                  <AddButton itemToAdd="Card" setModalToOpen={setModalToOpen} />
-                </>
-              }
-            />
-          </Routes>
-        </BrowserRouter>
+        <RouterProvider router={routes} />
       </main>
 
       <Modal
@@ -138,6 +171,8 @@ function App() {
         BOARD_ENDPOINT={BOARD_ENDPOINT}
         CARD_ENDPOINT={CARD_ENDPOINT}
         fetchAllBoards={fetchAllBoards}
+        fetchAllCards={fetchAllCards}
+        selectedBoardId={selectedBoardId}
       />
 
       <footer style={{ height: footerHeight }}>

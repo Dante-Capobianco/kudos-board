@@ -74,6 +74,7 @@ const KudosBoardList = (props) => {
             PORT={props.PORT}
             BOARD_ENDPOINT={props.BOARD_ENDPOINT}
             fetchAllBoards={props.fetchAllBoards}
+            setSelectedBoardId={props.setSelectedBoardId}
           />
         ))
       ) : (
