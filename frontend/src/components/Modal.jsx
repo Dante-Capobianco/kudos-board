@@ -44,6 +44,21 @@ const Modal = (props) => {
     try {
       const newCard = { message: cardMessage, gif: gifURL };
       if (cardAuthor) newCard.author = cardAuthor;
+
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}${props.PORT}${props.BOARD_ENDPOINT}/${props.selectedBoardId}${props.CARD_ENDPOINT}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newCard),
+        }
+      );
+
+      if (response.ok) props.fetchAllCards();
+
+      exitModal();
     } catch (error) {
       exitModal();
     }

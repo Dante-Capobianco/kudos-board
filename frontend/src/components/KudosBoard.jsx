@@ -20,12 +20,17 @@ const KudosBoard = (props) => {
     } catch (error) {}
   };
 
+  const navigateToBoardPage = () => {
+    props.setSelectedBoardId(props.id);
+    navigate(`/board/${props.id}`);
+  }
+
   return (
     <article
       className="board"
       onClick={(event) =>
         event.target.className !== "delete-container"
-          ? navigate(`/board/${props.id}`)
+          ? navigateToBoardPage()
           : null
       }
     >

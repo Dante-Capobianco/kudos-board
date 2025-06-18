@@ -28,6 +28,7 @@ function App() {
   const [isHomePageOpen, setIsHomePageOpen] = useState(true);
   const [modalToOpen, setModalToOpen] = useState("");
   const [allBoards, setAllBoards] = useState([]);
+  const [selectedBoardId, setSelectedBoardId] = useState(null);
 
   const fetchAllBoards = async () => {
     try {
@@ -44,6 +45,10 @@ function App() {
       }
     } catch (error) {}
   };
+
+  const fetchAllCards = async () => {
+
+  }
 
   const routes = createBrowserRouter([
     {
@@ -65,6 +70,7 @@ function App() {
             fetchAllBoards={fetchAllBoards}
             BOARD_ENDPOINT={BOARD_ENDPOINT}
             PORT={PORT}
+            setSelectedBoardId={setSelectedBoardId}
           />
           <AddButton itemToAdd="Board" setModalToOpen={setModalToOpen} />
         </>
@@ -78,6 +84,8 @@ function App() {
           <KudosCardList
             setIsHomePageOpen={setIsHomePageOpen}
             setModalToOpen={setModalToOpen}
+            fetchAllCards={fetchAllCards}
+            setSelectedBoardId={setSelectedBoardId}
           />
           <AddButton itemToAdd="Card" setModalToOpen={setModalToOpen} />
         </>
@@ -137,6 +145,8 @@ function App() {
         BOARD_ENDPOINT={BOARD_ENDPOINT}
         CARD_ENDPOINT={CARD_ENDPOINT}
         fetchAllBoards={fetchAllBoards}
+        fetchAllCards={fetchAllCards}
+        selectedBoardId={selectedBoardId}
       />
 
       <footer style={{ height: footerHeight }}>
