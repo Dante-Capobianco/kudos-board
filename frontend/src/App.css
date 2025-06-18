@@ -321,3 +321,8 @@ footer {
   scale: 1.05;
   border: 2px solid gray;
 }
+
+.back-link {
+  position: absolute;
+  color: black;
+}

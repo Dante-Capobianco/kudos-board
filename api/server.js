@@ -42,10 +42,21 @@ server.delete("/board", async (req, res, next) => {
 server.post("/board/:id/card", async (req, res, next) => {
   const boardId = Number(req.params.id);
   const newCard = req.body;
-  
+
   try {
-    const created = await Card.create({...newCard, boardId});
+    const created = await Card.create({ ...newCard, boardId });
     res.status(201).json(created);
+  } catch (err) {
+    next(err);
+  }
+});
+
+server.get("/board/:id/card", async (req, res, next) => {
+  const boardId = Number(req.params.id);
+
+  try {
+    const allCards = await Card.findAll(boardId);
+    res.status(200).json(allCards);
   } catch (err) {
     next(err);
   }

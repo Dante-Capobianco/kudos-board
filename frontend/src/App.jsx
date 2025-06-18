@@ -6,7 +6,7 @@ import SideBar from "./components/SideBar";
 import KudosCardList from "./components/KudosCardList";
 import AddButton from "./components/AddButton";
 import Modal from "./components/Modal";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, Link, RouterProvider } from "react-router-dom";
 import { PageType } from "./utils/enums";
 
 function App() {
@@ -28,6 +28,7 @@ function App() {
   const [isHomePageOpen, setIsHomePageOpen] = useState(true);
   const [modalToOpen, setModalToOpen] = useState("");
   const [allBoards, setAllBoards] = useState([]);
+  const [allCards, setAllCards] = useState([]);
   const [selectedBoardId, setSelectedBoardId] = useState(null);
 
   const fetchAllBoards = async () => {
@@ -47,8 +48,20 @@ function App() {
   };
 
   const fetchAllCards = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}${PORT}${BOARD_ENDPOINT}/${selectedBoardId}${CARD_ENDPOINT}`,
+        {
+          method: "GET",
+        }
+      );
 
-  }
+      if (response.ok) {
+        const data = await response.json();
+        setAllCards(data);
+      }
+    } catch (error) {}
+  };
 
   const routes = createBrowserRouter([
     {
@@ -75,12 +88,17 @@ function App() {
           <AddButton itemToAdd="Board" setModalToOpen={setModalToOpen} />
         </>
       ),
-      errorElement: <h2>{ERROR_TEXT}</h2>
+      errorElement: <h2>{ERROR_TEXT}</h2>,
     },
     {
       path: "/board/:boardId",
       element: (
         <>
+          <Link to="/" onClick={() => setAllCards([])} className="back-link">
+            <span className="modal-exit material-symbols-outlined">
+              arrow_back
+            </span>
+          </Link>
           <KudosCardList
             setIsHomePageOpen={setIsHomePageOpen}
             setModalToOpen={setModalToOpen}
