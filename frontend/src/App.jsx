@@ -18,6 +18,7 @@ function App() {
   const CARD_ENDPOINT = "/card";
   const PORT = 3000;
   const MIN_FOOTER_HEIGHT = 50;
+  const ERROR_TEXT = "Page Not Found";
 
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [searchQueryToSubmit, setSearchQueryToSubmit] = useState("");
@@ -68,6 +69,7 @@ function App() {
           <AddButton itemToAdd="Board" setModalToOpen={setModalToOpen} />
         </>
       ),
+      errorElement: <h2>{ERROR_TEXT}</h2>
     },
     {
       path: "/board/:boardId",
