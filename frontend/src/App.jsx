@@ -4,6 +4,8 @@ import KudosBoardList from "./components/KudosBoardList";
 import SearchBar from "./components/SearchBar";
 import SideBar from "./components/SideBar";
 import KudosCardList from "./components/KudosCardList";
+import AddButton from "./components/AddButton";
+import Modal from "./components/Modal";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -16,6 +18,9 @@ function App() {
   const celebration = "Celebration";
   const thankYou = "Thank You";
   const inspiration = "Inspiration";
+  const boardEndpoint = "/board";
+  const cardEndpoint = "/card";
+  const port = 3000;
 
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [searchQueryToSubmit, setSearchQueryToSubmit] = useState("");
@@ -23,6 +28,24 @@ function App() {
   const [searchBarHeight, setSearchBarHeight] = useState(0);
   const [footerHeight, setFooterHeight] = useState(0);
   const [isHomePageOpen, setIsHomePageOpen] = useState(true);
+  const [modalToOpen, setModalToOpen] = useState("");
+  const [allBoards, setAllBoards] = useState([]);
+
+  const fetchAllBoards = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}${port}${boardEndpoint}`,
+        {
+          method: "GET",
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setAllBoards(data);
+      }
+    } catch (error) {}
+  };
 
   // On initial render, use header/banner, tile list, and window heights to dynamically set height of footer to be responsive
   useEffect(() => {
@@ -82,6 +105,7 @@ function App() {
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
                     setIsHomePageOpen={setIsHomePageOpen}
+                    setModalToOpen={setModalToOpen}
                   />
                   <KudosBoardList
                     currentPage={currentPage}
@@ -92,14 +116,43 @@ function App() {
                     inspiration={inspiration}
                     searchQueryToSubmit={searchQueryToSubmit}
                     setIsSideBarOpen={setIsSideBarOpen}
+                    allBoards={allBoards}
+                    fetchAllBoards={fetchAllBoards}
+                  />
+                  <AddButton
+                    itemToAdd="Board"
+                    setModalToOpen={setModalToOpen}
                   />
                 </>
               }
             />
-            <Route path="/board/:boardId" element={<KudosCardList setIsHomePageOpen={setIsHomePageOpen} />} />
+            <Route
+              path="/board/:boardId"
+              element={
+                <>
+                  <KudosCardList
+                    setIsHomePageOpen={setIsHomePageOpen}
+                    setModalToOpen={setModalToOpen}
+                  />
+                  <AddButton itemToAdd="Card" setModalToOpen={setModalToOpen} />
+                </>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </main>
+
+      <Modal
+        modalToOpen={modalToOpen}
+        setModalToOpen={setModalToOpen}
+        celebration={celebration}
+        thankYou={thankYou}
+        inspiration={inspiration}
+        port={port}
+        boardEndpoint={boardEndpoint}
+        cardEndpoint={cardEndpoint}
+        fetchAllBoards={fetchAllBoards}
+      />
 
       <footer style={{ height: footerHeight }}>
         <h4>By: Dante Capobianco</h4>

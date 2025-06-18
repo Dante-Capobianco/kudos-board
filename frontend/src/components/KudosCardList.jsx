@@ -6,8 +6,9 @@ const KudosCardList = (props) => {
 
   useEffect(() => {
     props.setIsHomePageOpen(false);
+    props.setModalToOpen("");
   }, [])
-  return <div>{boardId}</div>;
+  return <div className="board-card-list">{boardId}</div>;
 };
 
 export default KudosCardList;

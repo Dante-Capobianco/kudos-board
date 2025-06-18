@@ -1,32 +1,30 @@
 import KudosBoard from "./KudosBoard.jsx";
-import { kudosBoardData } from "../../testData.js";
 import { useState, useEffect } from "react";
 
 const KudosBoardList = (props) => {
-  const kudosBoards = kudosBoardData;
-  const [boardsToDisplay, setBoardsToDisplay] = useState(kudosBoards);
+  const [boardsToDisplay, setBoardsToDisplay] = useState(props.allBoards);
 
   const updateBoardsToDisplay = () => {
     let newBoardsToDisplay;
     switch (props.currentPage) {
       case props.all:
-        newBoardsToDisplay = kudosBoards;
+        newBoardsToDisplay = props.allBoards;
         break;
       case props.recent:
         //todo: https://docs.google.com/document/d/1zdT1PrCLJ-UU60-sMpy_jReyd3tehnzBKxdxPFKIO7g/edit?tab=t.0
         break;
       case props.celebration:
-        newBoardsToDisplay = kudosBoards.filter(
+        newBoardsToDisplay = props.allBoards.filter(
           (board) => board.category === props.celebration
         );
         break;
       case props.thankYou:
-        newBoardsToDisplay = kudosBoards.filter(
+        newBoardsToDisplay = props.allBoards.filter(
           (board) => board.category === props.thankYou
         );
         break;
       case props.inspiration:
-        newBoardsToDisplay = kudosBoards.filter(
+        newBoardsToDisplay = props.allBoards.filter(
           (board) => board.category === props.inspiration
         );
         break;
@@ -43,15 +41,19 @@ const KudosBoardList = (props) => {
     }
 
     setBoardsToDisplay(newBoardsToDisplay);
-  }
+  };
 
   useEffect(() => {
     updateBoardsToDisplay();
-  }, [props.currentPage, props.searchQueryToSubmit]);
+  }, [props.allBoards, props.currentPage, props.searchQueryToSubmit]);
+
+  useEffect(() => {
+    props.fetchAllBoards();
+  }, []);
 
   return (
     <section
-      className="board-list"
+      className="board-card-list"
       onMouseEnter={() => props.setIsSideBarOpen(false)}
     >
       {boardsToDisplay.length > 0 ? (
@@ -63,6 +65,7 @@ const KudosBoardList = (props) => {
             title={board.title}
             category={board.category}
             id={board.id}
+            author={board.author}
           />
         ))
       ) : (
