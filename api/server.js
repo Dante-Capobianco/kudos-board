@@ -29,8 +29,8 @@ server.get("/board", async (req, res, next) => {
   }
 });
 
-server.delete("/board", async (req, res, next) => {
-  const id = req.body.id;
+server.delete("/board/:id", async (req, res, next) => {
+  const id = Number(req.params.id);
   try {
     await Board.delete(id);
     res.status(204).end();

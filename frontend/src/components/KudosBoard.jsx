@@ -6,13 +6,11 @@ const KudosBoard = (props) => {
   const deleteBoard = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}${props.PORT}${props.BOARD_ENDPOINT}`,
+        `${import.meta.env.VITE_BASE_URL}${props.PORT}${props.BOARD_ENDPOINT}/${
+          props.id
+        }`,
         {
           method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({id: props.id}),
         }
       );
 
@@ -23,7 +21,7 @@ const KudosBoard = (props) => {
   const navigateToBoardPage = () => {
     props.setSelectedBoardId(props.id);
     navigate(`/board/${props.id}`);
-  }
+  };
 
   return (
     <article
