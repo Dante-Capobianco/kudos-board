@@ -7,24 +7,21 @@ import KudosCardList from "./components/KudosCardList";
 import AddButton from "./components/AddButton";
 import Modal from "./components/Modal";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {PageType} from "./utils/enums"
 
 function App() {
-  const titleIconSrc = "/kudos.png";
-  const titleIconAlt = "Kudos medal icon";
-  const titleIconSize = "40px";
-  const kudosBoardListHeight = window.innerHeight * 0.75; // 75vh
-  const all = "All";
-  const recent = "Recent";
-  const celebration = "Celebration";
-  const thankYou = "Thank You";
-  const inspiration = "Inspiration";
-  const boardEndpoint = "/board";
-  const cardEndpoint = "/card";
-  const port = 3000;
+  const TITLE_ICON_SRC = "/kudos.png";
+  const TITLE_ICON_ALT = "Kudos medal icon";
+  const TITLE_ICON_SIZE = "40px";
+  const KUDOS_BOARD_LIST_HEIGHT = window.innerHeight * 0.75; // 75vh
+  const BOARD_ENDPOINT = "/board";
+  const CARD_ENDPOINT = "/card";
+  const PORT = 3000;
+  const MIN_FOOTER_HEIGHT = 50;
 
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [searchQueryToSubmit, setSearchQueryToSubmit] = useState("");
-  const [currentPage, setCurrentPage] = useState(all);
+  const [currentPage, setCurrentPage] = useState(PageType.ALL);
   const [searchBarHeight, setSearchBarHeight] = useState(0);
   const [footerHeight, setFooterHeight] = useState(0);
   const [isHomePageOpen, setIsHomePageOpen] = useState(true);
@@ -34,7 +31,7 @@ function App() {
   const fetchAllBoards = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}${port}${boardEndpoint}`,
+        `${import.meta.env.VITE_BASE_URL}${PORT}${BOARD_ENDPOINT}`,
         {
           method: "GET",
         }
@@ -53,8 +50,8 @@ function App() {
       window.innerHeight -
       document.getElementById("app-header")?.offsetHeight -
       searchBarHeight -
-      kudosBoardListHeight;
-    setFooterHeight(height > 50 ? height : 50);
+      KUDOS_BOARD_LIST_HEIGHT;
+    setFooterHeight(height > MIN_FOOTER_HEIGHT ? height : MIN_FOOTER_HEIGHT);
   }, [searchBarHeight]);
 
   return (
@@ -63,16 +60,16 @@ function App() {
         <h1>
           <img
             className="header-img"
-            src={titleIconSrc}
-            alt={titleIconAlt}
-            width={titleIconSize}
+            src={TITLE_ICON_SRC}
+            alt={TITLE_ICON_ALT}
+            width={TITLE_ICON_SIZE}
           />
           Kudos Board
           <img
             className="header-img"
-            src={titleIconSrc}
-            alt={titleIconAlt}
-            width={titleIconSize}
+            src={TITLE_ICON_SRC}
+            alt={TITLE_ICON_ALT}
+            width={TITLE_ICON_SIZE}
           />
         </h1>
         <p style={{ fontFamily: "fantasy" }}>
@@ -88,7 +85,7 @@ function App() {
         />
       </header>
 
-      <main style={{ height: kudosBoardListHeight }}>
+      <main style={{ height: KUDOS_BOARD_LIST_HEIGHT }}>
         <BrowserRouter>
           <Routes>
             <Route
@@ -96,11 +93,6 @@ function App() {
               element={
                 <>
                   <SideBar
-                    all={all}
-                    recent={recent}
-                    celebration={celebration}
-                    thankYou={thankYou}
-                    inspiration={inspiration}
                     isSideBarOpen={isSideBarOpen}
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
@@ -109,15 +101,12 @@ function App() {
                   />
                   <KudosBoardList
                     currentPage={currentPage}
-                    all={all}
-                    recent={recent}
-                    celebration={celebration}
-                    thankYou={thankYou}
-                    inspiration={inspiration}
                     searchQueryToSubmit={searchQueryToSubmit}
                     setIsSideBarOpen={setIsSideBarOpen}
                     allBoards={allBoards}
                     fetchAllBoards={fetchAllBoards}
+                    BOARD_ENDPOINT={BOARD_ENDPOINT}
+                    PORT={PORT}
                   />
                   <AddButton
                     itemToAdd="Board"
@@ -145,12 +134,9 @@ function App() {
       <Modal
         modalToOpen={modalToOpen}
         setModalToOpen={setModalToOpen}
-        celebration={celebration}
-        thankYou={thankYou}
-        inspiration={inspiration}
-        port={port}
-        boardEndpoint={boardEndpoint}
-        cardEndpoint={cardEndpoint}
+        PORT={PORT}
+        BOARD_ENDPOINT={BOARD_ENDPOINT}
+        CARD_ENDPOINT={CARD_ENDPOINT}
         fetchAllBoards={fetchAllBoards}
       />
 

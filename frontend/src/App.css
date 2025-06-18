@@ -279,3 +279,16 @@ footer {
   align-self: center;
   width: 20%;
 }
+
+.delete-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: darkred;
+}
+
+.delete-container:hover,
+.delete-container:focus {
+  cursor: pointer;
+  color: rgb(187, 5, 5);
+}
