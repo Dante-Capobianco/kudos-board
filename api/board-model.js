@@ -6,5 +6,10 @@ module.exports = {
   async create(newBoard) {
     const created = await prisma.board.create({ data: newBoard });
     return created;
+  },
+
+  async findAll() {
+    const allBoards = await prisma.board.findMany();
+    return allBoards;
   }
 };

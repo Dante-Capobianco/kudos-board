@@ -18,6 +18,8 @@ function App() {
   const celebration = "Celebration";
   const thankYou = "Thank You";
   const inspiration = "Inspiration";
+  const boardEndpoint = "/board";
+  const cardEndpoint = "/card";
   const port = 3000;
 
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
@@ -27,6 +29,23 @@ function App() {
   const [footerHeight, setFooterHeight] = useState(0);
   const [isHomePageOpen, setIsHomePageOpen] = useState(true);
   const [modalToOpen, setModalToOpen] = useState("");
+  const [allBoards, setAllBoards] = useState([]);
+
+  const fetchAllBoards = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}${port}${boardEndpoint}`,
+        {
+          method: "GET",
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setAllBoards(data);
+      }
+    } catch (error) {}
+  };
 
   // On initial render, use header/banner, tile list, and window heights to dynamically set height of footer to be responsive
   useEffect(() => {
@@ -97,6 +116,8 @@ function App() {
                     inspiration={inspiration}
                     searchQueryToSubmit={searchQueryToSubmit}
                     setIsSideBarOpen={setIsSideBarOpen}
+                    allBoards={allBoards}
+                    fetchAllBoards={fetchAllBoards}
                   />
                   <AddButton
                     itemToAdd="Board"
@@ -128,6 +149,9 @@ function App() {
         thankYou={thankYou}
         inspiration={inspiration}
         port={port}
+        boardEndpoint={boardEndpoint}
+        cardEndpoint={cardEndpoint}
+        fetchAllBoards={fetchAllBoards}
       />
 
       <footer style={{ height: footerHeight }}>

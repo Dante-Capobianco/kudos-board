@@ -5,9 +5,6 @@ const Modal = (props) => {
   const [category, setCategory] = useState("");
   const [author, setAuthor] = useState("");
 
-  const addBoardEndpoint = "/board/add";
-  const addCardEndpoint = "/card/add";
-
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -16,7 +13,7 @@ const Modal = (props) => {
       if (author) newBoard.author = author;
 
       const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}${props.port}${addBoardEndpoint}`,
+        `${import.meta.env.VITE_BASE_URL}${props.port}${props.boardEndpoint}`,
         {
           method: "POST",
           headers: {
@@ -26,11 +23,9 @@ const Modal = (props) => {
         }
       );
 
-      if (!response.ok) {
-        exitModal();
-      }
+      if (response.ok) props.fetchAllBoards();
 
-      const data = await response.json();
+      exitModal();
     } catch (error) {
       exitModal();
     }
