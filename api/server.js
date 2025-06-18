@@ -62,6 +62,17 @@ server.get("/board/:id/card", async (req, res, next) => {
   }
 });
 
+server.patch("/board/:id/card", async (req, res, next) => {
+  const {id, newUpvoteCount} = req.body;
+
+  try {
+    await Card.updateUpvote(id, newUpvoteCount);
+    res.status(204).end();
+  } catch (err) {
+    next(err);
+  }
+});
+
 server.use("/", (req, res, next) => {
   next({ status: 404, message: "Endpoint not found" });
 });
