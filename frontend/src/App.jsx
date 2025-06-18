@@ -51,7 +51,9 @@ function App() {
     if (!selectedBoardId) return;
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}${PORT}${BOARD_ENDPOINT}/${selectedBoardId}${CARD_ENDPOINT}`,
+        `${
+          import.meta.env.VITE_BASE_URL
+        }${PORT}${BOARD_ENDPOINT}/${selectedBoardId}${CARD_ENDPOINT}`,
         {
           method: "GET",
         }
@@ -59,6 +61,10 @@ function App() {
 
       if (response.ok) {
         const data = await response.json();
+        data.sort(
+          (cardA, cardB) =>
+            new Date(cardB.createdAt) - new Date(cardA.createdAt)
+        );
         setAllCards(data);
       }
     } catch (error) {}
@@ -67,7 +73,7 @@ function App() {
   const returnToHomePage = () => {
     setAllCards([]);
     setSelectedBoardId(null);
-  }
+  };
 
   const routes = createBrowserRouter([
     {
@@ -112,6 +118,9 @@ function App() {
             allCards={allCards}
             setSelectedBoardId={setSelectedBoardId}
             selectedBoardId={selectedBoardId}
+            PORT={PORT}
+            BOARD_ENDPOINT={BOARD_ENDPOINT}
+            CARD_ENDPOINT={CARD_ENDPOINT}
           />
           <AddButton itemToAdd="Card" setModalToOpen={setModalToOpen} />
         </>

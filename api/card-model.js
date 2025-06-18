@@ -14,4 +14,17 @@ module.exports = {
     });
     return allCards;
   },
+
+  async updateUpvote(cardId, newUpvoteCount) {
+    await prisma.card.update({
+      data: {upvotes: newUpvoteCount},
+      where: { id: cardId },
+    });
+    return;
+  },
+
+  async delete(cardId) {
+    await prisma.card.delete({ where: { id: cardId } });
+    return;
+  },
 };

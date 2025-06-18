@@ -3,16 +3,14 @@ import { useNavigate } from "react-router-dom";
 const KudosBoard = (props) => {
   const navigate = useNavigate();
 
-  const deleteBoard = async () => {
+  const handleDelete = async () => {
     try {
       const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}${props.PORT}${props.BOARD_ENDPOINT}`,
+        `${import.meta.env.VITE_BASE_URL}${props.PORT}${props.BOARD_ENDPOINT}/${
+          props.id
+        }`,
         {
           method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({id: props.id}),
         }
       );
 
@@ -23,7 +21,7 @@ const KudosBoard = (props) => {
   const navigateToBoardPage = () => {
     props.setSelectedBoardId(props.id);
     navigate(`/board/${props.id}`);
-  }
+  };
 
   return (
     <article
@@ -36,8 +34,8 @@ const KudosBoard = (props) => {
     >
       <img src={props.src} alt={props.alt} className="board-img" />
       <h2 className="board-title-card-message board-title">{props.title}</h2>
-      <h3 className="card-category">Category: {props.category}</h3>
-      <h3 className="delete-container" onClick={deleteBoard}>
+      <h3 className="board-category">Category: {props.category}</h3>
+      <h3 className="delete-container" onClick={handleDelete}>
         <span className="material-symbols-outlined">delete</span>
         Delete
       </h3>

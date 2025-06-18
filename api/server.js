@@ -29,8 +29,8 @@ server.get("/board", async (req, res, next) => {
   }
 });
 
-server.delete("/board", async (req, res, next) => {
-  const id = req.body.id;
+server.delete("/board/:id", async (req, res, next) => {
+  const id = Number(req.params.id);
   try {
     await Board.delete(id);
     res.status(204).end();
@@ -57,6 +57,28 @@ server.get("/board/:id/card", async (req, res, next) => {
   try {
     const allCards = await Card.findAll(boardId);
     res.status(200).json(allCards);
+  } catch (err) {
+    next(err);
+  }
+});
+
+server.patch("/board/:id/card/:cardId", async (req, res, next) => {
+  const cardId = Number(req.params.cardId);
+  const { newUpvoteCount } = req.body;
+
+  try {
+    await Card.updateUpvote(cardId, newUpvoteCount);
+    res.status(204).end();
+  } catch (err) {
+    next(err);
+  }
+});
+
+server.delete("/board/:id/card/:cardId", async (req, res, next) => {
+  const cardId = Number(req.params.cardId);
+  try {
+    await Card.delete(cardId);
+    res.status(204).end();
   } catch (err) {
     next(err);
   }

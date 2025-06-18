@@ -24,6 +24,13 @@ const KudosCardList = (props) => {
             src={card.gif}
             alt={`${card.message} Image`}
             message={card.message}
+            upvotes={card.upvotes}
+            id={card.id}
+            boardId={boardId}
+            PORT={props.PORT}
+            BOARD_ENDPOINT={props.BOARD_ENDPOINT}
+            CARD_ENDPOINT={props.CARD_ENDPOINT}
+            fetchAllCards={props.fetchAllCards}
           />
         ))
       ) : (
