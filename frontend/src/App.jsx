@@ -32,6 +32,7 @@ function App() {
   const [selectedBoardId, setSelectedBoardId] = useState(null);
   const [selectedCardId, setSelectedCardId] = useState(null);
   const [selectedCardDetails, setSelectedCardDetails] = useState(null);
+  const [isLightMode, setIsLightMode] = useState(true);
 
   const fetchAllBoards = async () => {
     try {
@@ -141,6 +142,10 @@ function App() {
     },
   ]);
 
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', isLightMode ? "light" : "dark");
+  }, [isLightMode])
+
   // On initial render, use header/banner, tile list, and window heights to dynamically set height of footer to be responsive
   useEffect(() => {
     let height =
@@ -154,6 +159,13 @@ function App() {
   return (
     <div>
       <header id="app-header">
+        <div className="color-mode" onClick={() => setIsLightMode(!isLightMode)}>
+          <span class="color-mode-icon material-symbols-outlined">
+            {isLightMode ? "brightness_5" : "brightness_3"}
+          </span>
+          <span>{isLightMode ? "Light Mode" : "Dark Mode"}</span>
+        </div>
+
         <h1>
           <img
             className="header-img"
@@ -169,7 +181,7 @@ function App() {
             width={TITLE_ICON_SIZE}
           />
         </h1>
-        <p style={{ fontFamily: "fantasy" }}>
+        <p className="title-tagline">
           Give kudos, get kudos... kudos all around!
         </p>
 
