@@ -16,7 +16,7 @@ function App() {
   const KUDOS_BOARD_LIST_HEIGHT = window.innerHeight * 0.75; // 75vh
   const BOARD_ENDPOINT = "/board";
   const CARD_ENDPOINT = "/card";
-  const PORT = import.meta.env.PORT;
+  const PORT = import.meta.env.VITE_PORT;
   const MIN_FOOTER_HEIGHT = 50;
   const ERROR_TEXT = "Page Not Found";
   const BOARD = "Board";
