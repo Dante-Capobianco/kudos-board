@@ -19,6 +19,8 @@ function App() {
   const PORT = 3000;
   const MIN_FOOTER_HEIGHT = 50;
   const ERROR_TEXT = "Page Not Found";
+  const BOARD = "Board";
+  const CARD = "Card";
 
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const [searchQueryToSubmit, setSearchQueryToSubmit] = useState("");
@@ -109,7 +111,7 @@ function App() {
             PORT={PORT}
             setSelectedBoardId={setSelectedBoardId}
           />
-          <AddButton itemToAdd="Board" setModalToOpen={setModalToOpen} />
+          <AddButton itemToAdd={BOARD} setModalToOpen={setModalToOpen} />
         </>
       ),
       errorElement: <h2>{ERROR_TEXT}</h2>,
@@ -136,15 +138,18 @@ function App() {
             setSelectedCardId={setSelectedCardId}
             setSelectedCardDetails={setSelectedCardDetails}
           />
-          <AddButton itemToAdd="Card" setModalToOpen={setModalToOpen} />
+          <AddButton itemToAdd={CARD} setModalToOpen={setModalToOpen} />
         </>
       ),
     },
   ]);
 
   useEffect(() => {
-    document.documentElement.setAttribute('data-theme', isLightMode ? "light" : "dark");
-  }, [isLightMode])
+    document.documentElement.setAttribute(
+      "data-theme",
+      isLightMode ? "light" : "dark"
+    );
+  }, [isLightMode]);
 
   // On initial render, use header/banner, tile list, and window heights to dynamically set height of footer to be responsive
   useEffect(() => {
@@ -159,7 +164,10 @@ function App() {
   return (
     <div>
       <header id="app-header">
-        <div className="color-mode" onClick={() => setIsLightMode(!isLightMode)}>
+        <div
+          className="color-mode"
+          onClick={() => setIsLightMode(!isLightMode)}
+        >
           <span class="color-mode-icon material-symbols-outlined">
             {isLightMode ? "brightness_5" : "brightness_3"}
           </span>
