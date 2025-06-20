@@ -70,6 +70,31 @@ const Modal = (props) => {
 
   const handleCommentSubmit = async (event) => {
     event.preventDefault();
+    if (!props.selectedCardId) exitModal();
+
+    try {
+      const newComment = { message: commentMessage };
+      if (commentAuthor) newComment.author = commentAuthor;
+
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}${props.PORT}${props.BOARD_ENDPOINT}/${
+          props.selectedBoardId
+        }${props.CARD_ENDPOINT}/${props.selectedCardId}`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newComment),
+        }
+      );
+
+      if (response.ok) props.fetchAllCards();
+
+      exitModal();
+    } catch (error) {
+      exitModal();
+    }
   };
 
   const exitModal = () => {

@@ -59,8 +59,8 @@ const KudosCard = (props) => {
   };
 
   const handleComment = () => {
-    props.setModalToOpen("Comment");
     props.setSelectedCardId(props.id);
+    props.setModalToOpen("Comment");
   };
 
   return (

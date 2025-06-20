@@ -3,6 +3,7 @@ const helmet = require("helmet");
 const cors = require("cors");
 const Board = require("./board-model");
 const Card = require("./card-model");
+const Comment = require("./comment-model");
 
 const server = express();
 server.use(helmet());
@@ -91,6 +92,18 @@ server.patch("/board/:id/card/pin/:cardId", async (req, res, next) => {
   try {
     await Card.updatePinnedStatus(cardId, newPinnedStatus);
     res.status(204).end();
+  } catch (err) {
+    next(err);
+  }
+});
+
+server.post("/board/:id/card/:cardId", async (req, res, next) => {
+  const cardId = Number(req.params.cardId);
+  const newComment = req.body;
+
+  try {
+    const created = await Comment.create({ ...newComment, cardId });
+    res.status(201).json(created);
   } catch (err) {
     next(err);
   }
