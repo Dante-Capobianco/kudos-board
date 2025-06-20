@@ -84,6 +84,18 @@ server.delete("/board/:id/card/:cardId", async (req, res, next) => {
   }
 });
 
+server.patch("/board/:id/card/pin/:cardId", async (req, res, next) => {
+  const cardId = Number(req.params.cardId);
+  const { newPinnedStatus } = req.body;
+
+  try {
+    await Card.updatePinnedStatus(cardId, newPinnedStatus);
+    res.status(204).end();
+  } catch (err) {
+    next(err);
+  }
+});
+
 server.use("/", (req, res, next) => {
   next({ status: 404, message: "Endpoint not found" });
 });

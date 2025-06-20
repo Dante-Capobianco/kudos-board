@@ -27,4 +27,12 @@ module.exports = {
     await prisma.card.delete({ where: { id: cardId } });
     return;
   },
+
+  async updatePinnedStatus(cardId, newPinnedStatus) {
+    await prisma.card.update({
+      data: {pinned: newPinnedStatus, updatedAt: new Date()},
+      where: { id: cardId },
+    });
+    return;
+  },
 };

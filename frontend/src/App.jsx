@@ -47,6 +47,18 @@ function App() {
     } catch (error) {}
   };
 
+  const sortCards = (cardA, cardB) => {
+    if (cardA.pinned && !cardB.pinned) {
+      return -1;
+    } else if (!cardA.pinned && cardB.pinned) {
+      return 1;
+    } else if (cardA.pinned && cardB.pinned) {
+      return new Date(cardB.updatedAt) - new Date(cardA.updatedAt);
+    } else {
+      return new Date(cardB.createdAt) - new Date(cardA.createdAt);
+    }
+  };
+
   const fetchAllCards = async () => {
     if (!selectedBoardId) return;
     try {
@@ -61,10 +73,7 @@ function App() {
 
       if (response.ok) {
         const data = await response.json();
-        data.sort(
-          (cardA, cardB) =>
-            new Date(cardB.createdAt) - new Date(cardA.createdAt)
-        );
+        data.sort((cardA, cardB) => sortCards(cardA, cardB));
         setAllCards(data);
       }
     } catch (error) {}
