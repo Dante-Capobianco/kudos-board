@@ -143,6 +143,7 @@ footer {
 .board-card {
   width: 23vw;
   height: 55vh;
+  position: relative;
   background-color: rgb(235, 240, 249);
   border: 2px solid #282c34;
   border-radius: 20px;
@@ -375,7 +376,7 @@ footer {
 
 .card-pin {
   align-self: flex-end;
-  position: absolute;
+  position:absolute;
   margin: 20px 20px 0 0;
   padding: 10px;
   background-color: #f4f4f4;
