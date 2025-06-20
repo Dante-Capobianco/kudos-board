@@ -154,7 +154,7 @@ const Modal = (props) => {
             className="modal-form"
             onSubmit={(event) => handleBoardSubmit(event)}
           >
-            <label htmlFor="title">Title</label>
+            <label className="modal-label" htmlFor="title">Title</label>
             <input
               id="title"
               type="text"
@@ -165,7 +165,7 @@ const Modal = (props) => {
               required
             />
 
-            <label htmlFor="category">Category</label>
+            <label className="modal-label" htmlFor="category">Category</label>
             <select
               id="category"
               className="text-input dropdown-input"
@@ -185,7 +185,7 @@ const Modal = (props) => {
               <option value={PageType.THANK_YOU}>{PageType.THANK_YOU}</option>
             </select>
 
-            <label htmlFor="author">Author (optional)</label>
+            <label className="modal-label" htmlFor="author">Author (optional)</label>
             <input
               id="author"
               type="text"
@@ -207,7 +207,7 @@ const Modal = (props) => {
             className="modal-form"
             onSubmit={(event) => handleCardSubmit(event)}
           >
-            <label htmlFor="message">Message</label>
+            <label className="modal-label" htmlFor="message">Message</label>
             <input
               id="message"
               type="text"
@@ -218,7 +218,7 @@ const Modal = (props) => {
               required
             />
 
-            <label htmlFor="gifSearch">GIF Search</label>
+            <label className="modal-label" htmlFor="gifSearch">GIF Search</label>
             <div>
               <input
                 id="gifSearch"
@@ -237,7 +237,7 @@ const Modal = (props) => {
                 Search
               </button>
             </div>
-            <div>Selected Gif: {gifTitle ? gifTitle : "None selected"}</div>
+            <div className="selected-gif">Selected Gif: {gifTitle ? gifTitle : "None selected"}</div>
 
             <section className="gif-container">
               {gifOptions.map((gif) => (
@@ -253,7 +253,7 @@ const Modal = (props) => {
               ))}
             </section>
 
-            <label htmlFor="author">Author (optional)</label>
+            <label className="modal-label" htmlFor="author">Author (optional)</label>
             <input
               id="author"
               type="text"
@@ -276,7 +276,7 @@ const Modal = (props) => {
             className="modal-form"
             onSubmit={(event) => handleCommentSubmit(event)}
           >
-            <label htmlFor="message">Message</label>
+            <label className="modal-label" htmlFor="message">Message</label>
             <input
               id="message"
               type="text"
@@ -287,7 +287,7 @@ const Modal = (props) => {
               required
             />
 
-            <label htmlFor="author">Author (optional)</label>
+            <label className="modal-label" htmlFor="author">Author (optional)</label>
             <input
               id="author"
               type="text"

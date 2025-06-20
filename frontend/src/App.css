@@ -1,18 +1,89 @@
+/* Background light, text dark */
+:root {
+  --header-footer-background: rgb(235, 240, 249);
+  --border: lightgray;
+  --search-bar-background: rgb(249, 243, 235);
+  --search-bar-background-hover: rgb(238, 228, 215);
+  --header-footer-text: #282c34;
+  --text: black;
+  --placeholder-text: #4a4a4a;
+  --sidebar-background: #d1e0fc;
+  --sidebar-text: #2b2a2a;
+  --sidebar-text-hover: rgb(0, 0, 0);
+  --body-background: #f4f4f4;
+  --board-card-border: #282c34;
+  --board-card-background: rgb(235, 240, 249);
+  --board-card-background-hover: rgb(207, 217, 237);
+  --delete-icon: darkred;
+  --delete-icon-hover: rgb(187, 5, 5);
+  --modal-background: #f4f4f4;
+  --modal-exit-icon-hover: #d7d7d7;
+  --comment: darkgreen;
+  --comment-hover: rgb(0, 122, 0);
+  --upvote-hover: rgb(3, 3, 126);
+  --pinned: rgb(78, 78, 78);
+  --pin-hover: gray;
+}
+
+/* Background dark, text light */
+[data-theme="dark"] {
+  --header-footer-background: #282c34;
+  --border: darkgray;
+  --search-bar-background: rgb(56, 54, 53);
+  --search-bar-background-hover: rgb(39, 38, 37);
+  --header-footer-text: white;
+  --text: white;
+  --placeholder-text: rgb(228, 228, 228);
+  --sidebar-background: #464953;
+  --sidebar-text: white;
+  --sidebar-text-hover: #e8e8e8;
+  --body-background: #1f1e1e;
+  --board-card-border: #c8c5c5;
+  --board-card-background: rgb(54, 56, 61);
+  --board-card-background-hover: #4b4f59;
+  --delete-icon: #fbd6d6;
+  --delete-icon-hover: #f4c3c3;
+  --modal-background: #202020;
+  --modal-exit-icon-hover: #161616;
+  --comment: rgb(219, 255, 219);
+  --comment-hover: #c3fcc3;
+  --upvote-hover: #d4d4ff;
+  --pinned: rgb(225, 225, 225);
+  --pin-hover: rgb(191, 191, 191);
+}
+
+body {
+  background-color: var(--body-background);
+}
+
 header {
-  background-color: #282c34;
-  color: white;
+  background-color: var(--header-footer-background);
+  color: var(--header-footer-text);
   padding: 20px;
   height: auto;
   box-shadow: 0px 10px 10px gray;
   display: flex;
   flex-direction: column;
   align-items: center;
+  border-bottom: 2px solid var(--border);
+}
+
+.title-tagline {
+  font-family: fantasy;
+  font-size: 18px;
 }
 
 h1 {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   font-size: 40px;
   margin-bottom: 0;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: var(--text);
 }
 
 .header-img {
@@ -32,7 +103,7 @@ h1 {
   position: absolute;
   left: 1vw;
   font-size: 35px;
-  background-color: rgb(154, 154, 154, 0.2);
+  background-color: var(--search-bar-background);
   padding: 10px;
   border: 1px solid darkgray;
   border-radius: 50%;
@@ -41,15 +112,15 @@ h1 {
 
 .sidebar-icon:hover,
 .sidebar-icon:focus {
-  background-color: rgb(154, 154, 154, 0.4);
+  background-color: var(--search-bar-background-hover);
 }
 
 .search-bar {
   appearance: base-select;
-  border: 2px solid darkgray;
+  border: 2px solid var(--border);
   border-radius: 5px;
-  background-color: rgb(249, 243, 235);
-  color: black;
+  background-color: var(--search-bar-background);
+  color: var(--text);
   width: 20vw;
   padding: 10px;
   cursor: text;
@@ -63,15 +134,15 @@ h1 {
 
 /* Darken to ensure meets contrast best practices */
 .search-bar::placeholder {
-  color: #4a4a4a;
+  color: var(--placeholder-text);
 }
 
 .search-btn {
   appearance: base-select;
-  border: 2px solid darkgray;
+  border: 2px solid var(--border);
   border-radius: 20px;
-  background-color: rgb(249, 243, 235);
-  color: black;
+  background-color: var(--search-bar-background);
+  color: var(--text);
   width: 6vw;
   padding: 8px 5px 8px 5px;
   cursor: pointer;
@@ -81,7 +152,7 @@ h1 {
 
 .search-btn:focus,
 .search-btn:hover {
-  background-color: rgb(238, 228, 215);
+  background-color: var(--search-bar-background-hover);
   border: 2px solid gray;
 }
 
@@ -92,19 +163,20 @@ main {
 
 footer {
   box-shadow: 0px -10px 10px gray;
-  background-color: #282c34;
+  background-color: var(--header-footer-background);
   margin: auto 0 0 0;
-  color: white;
+  color: var(--header-footer-text);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 0 20px 0 20px;
+  border-top: 2px solid var(--border);
 }
 
 .sidebar-container {
   width: 20vw;
   height: 75vh;
-  background-color: #464953;
+  background-color: var(--sidebar-background);
   position: absolute;
   border-radius: 0 10px 10px 0;
   transition: left 0.5s ease;
@@ -121,14 +193,14 @@ footer {
   padding: 10px 0 10px 0;
   margin: 30px 0 30px 0;
   font-size: 18px;
-  color: white;
+  color: var(--sidebar-text);
   cursor: pointer;
   transition: scale 0.3s ease;
 }
 
 .sidebar-option:hover,
 .current-page {
-  color: #e8e8e8;
+  color: var(--sidebar-text-hover);
   scale: 1.2;
 }
 
@@ -144,8 +216,8 @@ footer {
   width: 23vw;
   height: 55vh;
   position: relative;
-  background-color: rgb(235, 240, 249);
-  border: 2px solid #282c34;
+  background-color: var(--board-card-background);
+  border: 2px solid var(--board-card-border);
   border-radius: 20px;
   transition: box-shadow 0.3s ease-in-out, scale 0.3s ease-in-out;
   box-shadow: 0 0 0 darkgray;
@@ -159,7 +231,7 @@ footer {
 .board-card:hover,
 .board-card:focus {
   cursor: pointer;
-  background-color: rgb(207, 217, 237);
+  background-color: var(--board-card-background-hover);
   box-shadow: 10px 10px 20px gray;
   scale: 1.04;
 }
@@ -175,10 +247,10 @@ footer {
   position: absolute;
   right: 3vw;
   bottom: 3vh;
-  border: 2px solid darkgray;
+  border: 2px solid var(--border);
   border-radius: 30px;
-  background-color: rgb(249, 243, 235);
-  color: black;
+  background-color: var(--search-bar-background);
+  color: var(--text);
   width: 10vw;
   height: 6vh;
   font-size: 20px;
@@ -188,7 +260,7 @@ footer {
 
 .add-btn:focus,
 .add-btn:hover {
-  background-color: rgb(238, 228, 215);
+  background-color: var(--search-bar-background-hover);
   border: 2px solid gray;
   scale: 1.1;
   cursor: pointer;
@@ -208,8 +280,8 @@ footer {
 }
 
 .modal {
-  background-color: #f4f4f4;
-  border: 2px solid darkgray;
+  background-color: var(--modal-background);
+  border: 2px solid var(--border);
   border-radius: 15px;
   z-index: 2;
   width: 50vw;
@@ -226,15 +298,16 @@ footer {
 .modal-exit {
   margin: 20px;
   padding: 15px;
-  background-color: #f4f4f4;
-  border: 1px solid lightgray;
+  background-color: var(--modal-background);
+  border: 1px solid var(--border);
   border-radius: 50%;
   box-shadow: 5px 5px 20px black;
   font-size: 32px;
+  color: var(--text);
 }
 
 .modal-exit:hover {
-  background-color: #d7d7d7;
+  background-color: var(--modal-exit-icon-hover);
   border: 1px solid gray;
   cursor: pointer;
 }
@@ -254,12 +327,16 @@ footer {
   margin-left: 20px;
 }
 
+.modal-label {
+  color: var(--text);
+}
+
 .text-input {
   appearance: base-select;
-  border: 2px solid darkgray;
+  border: 2px solid var(--border);
   border-radius: 10px;
-  background-color: rgb(249, 243, 235);
-  color: black;
+  background-color: var(--search-bar-background);
+  color: var(--text);
   width: 40%;
   padding: 8px 5px 8px 15px;
   font-size: 16px;
@@ -267,9 +344,13 @@ footer {
   cursor: text;
 }
 
+.text-input::placeholder {
+  color: var(--placeholder-text);
+}
+
 .text-input:focus {
   outline: none;
-  background-color: rgb(238, 228, 215);
+  background-color: var(--search-bar-background-hover);
   border: 2px solid gray;
 }
 
@@ -286,7 +367,7 @@ footer {
 
 .modal-btn:disabled {
   cursor: auto;
-  background-color: rgb(238, 228, 215);
+  background-color: var(--search-bar-background-hover);
   border: 2px solid gray;
 }
 
@@ -294,13 +375,13 @@ footer {
   display: flex;
   align-items: center;
   gap: 5px;
-  color: darkred;
+  color: var(--delete-icon);
 }
 
 .delete-container:hover,
 .delete-container:focus {
   cursor: pointer;
-  color: rgb(187, 5, 5);
+  color: var(--delete-icon-hover);
 }
 
 .gif-container {
@@ -365,7 +446,7 @@ footer {
 .upvote:hover,
 .upvote:focus {
   cursor: pointer;
-  color: rgb(3, 3, 126);
+  color: var(--upvote-hover);
   scale: 1.1;
 }
 
@@ -376,29 +457,29 @@ footer {
 
 .card-pin {
   align-self: flex-end;
-  position:absolute;
+  position: absolute;
   margin: 20px 20px 0 0;
   padding: 10px;
-  background-color: #f4f4f4;
+  background-color: var(--modal-background);
+  color: var(--text);
   border: 1px solid lightgray;
   border-radius: 50%;
   box-shadow: 5px 5px 20px black;
 }
 
 .card-pin:hover {
-  background-color: #d7d7d7;
   border: 1px solid gray;
   cursor: pointer;
   scale: 1.2;
 }
 
 .card-pin.material-symbols-outlined:hover {
-  color: gray;
+  color: var(--pin-hover);
   font-variation-settings: "FILL" 100;
 }
 
 .pinned.material-symbols-outlined {
-  color: rgb(78, 78, 78);
+  color: var(--pinned);
   font-variation-settings: "FILL" 100;
 }
 
@@ -411,13 +492,13 @@ footer {
   display: flex;
   align-items: center;
   gap: 5px;
-  color: darkgreen;
+  color: var(--comment);
 }
 
 .comment-container:hover,
 .comment-container:focus {
   cursor: pointer;
-  color: rgb(0, 122, 0);
+  color: var(--comment-hover);
 }
 
 .card-details-container {
@@ -432,4 +513,33 @@ footer {
   border-bottom: 2px solid gray;
   width: 100%;
   padding: 20px 0 20px 0;
+}
+
+.color-mode {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  left: 2vw;
+  top: 20px;
+  font-size: 20px;
+  background-color: var(--search-bar-background);
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.color-mode:focus,
+.color-mode:hover {
+  scale: 1.1;
+  background-color: var(--search-bar-background-hover);
+}
+
+.color-mode-icon {
+  font-size: 30px;
+}
+
+.selected-gif {
+  color: var(--text);
 }
