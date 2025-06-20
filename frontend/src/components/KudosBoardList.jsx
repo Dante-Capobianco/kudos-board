@@ -41,7 +41,7 @@ const KudosBoardList = (props) => {
   const filterBySearchTerm = (newBoardsToDisplay) => {
     if (props.searchQueryToSubmit) {
       newBoardsToDisplay = newBoardsToDisplay.filter((board) =>
-        board.title.includes(props.searchQueryToSubmit)
+        board.title.toLowerCase().includes(props.searchQueryToSubmit.toLowerCase())
       );
     }
 

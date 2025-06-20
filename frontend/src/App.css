@@ -2,8 +2,8 @@
 :root {
   --header-footer-background: rgb(235, 240, 249);
   --border: lightgray;
-  --search-bar-background: rgb(249, 243, 235);
-  --search-bar-background-hover: rgb(238, 228, 215);
+  --search-bar-background: #f9f3eb;
+  --search-bar-background-hover: #eee4d7;
   --header-footer-text: #282c34;
   --text: black;
   --placeholder-text: #4a4a4a;
@@ -12,14 +12,14 @@
   --sidebar-text-hover: rgb(0, 0, 0);
   --body-background: #f4f4f4;
   --board-card-border: #282c34;
-  --board-card-background: rgb(235, 240, 249);
+  --board-card-background: #ebf0f9;
   --board-card-background-hover: rgb(207, 217, 237);
-  --delete-icon: darkred;
-  --delete-icon-hover: rgb(187, 5, 5);
+  --delete-icon: #8b0000;
+  --delete-icon-hover: #bb0505;
   --modal-background: #f4f4f4;
   --modal-exit-icon-hover: #d7d7d7;
   --comment: darkgreen;
-  --comment-hover: rgb(0, 122, 0);
+  --comment-hover: #007a00;
   --upvote-hover: rgb(3, 3, 126);
   --pinned: rgb(78, 78, 78);
   --pin-hover: gray;
@@ -29,11 +29,11 @@
 [data-theme="dark"] {
   --header-footer-background: #282c34;
   --border: darkgray;
-  --search-bar-background: rgb(56, 54, 53);
-  --search-bar-background-hover: rgb(39, 38, 37);
+  --search-bar-background: #383635;
+  --search-bar-background-hover: #272625;
   --header-footer-text: white;
   --text: white;
-  --placeholder-text: rgb(228, 228, 228);
+  --placeholder-text: #e4e4e4;
   --sidebar-background: #464953;
   --sidebar-text: white;
   --sidebar-text-hover: #e8e8e8;
@@ -45,7 +45,7 @@
   --delete-icon-hover: #f4c3c3;
   --modal-background: #202020;
   --modal-exit-icon-hover: #161616;
-  --comment: rgb(219, 255, 219);
+  --comment: #dbffdb;
   --comment-hover: #c3fcc3;
   --upvote-hover: #d4d4ff;
   --pinned: rgb(225, 225, 225);
