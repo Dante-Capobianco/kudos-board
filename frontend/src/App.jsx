@@ -30,6 +30,7 @@ function App() {
   const [allBoards, setAllBoards] = useState([]);
   const [allCards, setAllCards] = useState([]);
   const [selectedBoardId, setSelectedBoardId] = useState(null);
+  const [selectedCardId, setSelectedCardId] = useState(null);
 
   const fetchAllBoards = async () => {
     try {
@@ -130,6 +131,7 @@ function App() {
             PORT={PORT}
             BOARD_ENDPOINT={BOARD_ENDPOINT}
             CARD_ENDPOINT={CARD_ENDPOINT}
+            setSelectedCardId={setSelectedCardId}
           />
           <AddButton itemToAdd="Card" setModalToOpen={setModalToOpen} />
         </>
@@ -191,6 +193,8 @@ function App() {
         fetchAllBoards={fetchAllBoards}
         fetchAllCards={fetchAllCards}
         selectedBoardId={selectedBoardId}
+        selectedCardId={selectedCardId}
+        setSelectedCardId={setSelectedCardId}
       />
 
       <footer style={{ height: footerHeight }}>

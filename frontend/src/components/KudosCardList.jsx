@@ -32,6 +32,8 @@ const KudosCardList = (props) => {
             BOARD_ENDPOINT={props.BOARD_ENDPOINT}
             CARD_ENDPOINT={props.CARD_ENDPOINT}
             fetchAllCards={props.fetchAllCards}
+            setModalToOpen={props.setModalToOpen}
+            setSelectedCardId={props.setSelectedCardId}
           />
         ))
       ) : (

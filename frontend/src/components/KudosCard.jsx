@@ -58,6 +58,11 @@ const KudosCard = (props) => {
     } catch (error) {}
   };
 
+  const handleComment = () => {
+    props.setModalToOpen("Comment");
+    props.setSelectedCardId(props.id);
+  };
+
   return (
     <article className="board-card">
       <span
@@ -80,10 +85,16 @@ const KudosCard = (props) => {
         <span className="material-symbols-outlined">thumb_up</span> Upvote:{" "}
         {props.upvotes}
       </h3>
-      <h3 className="delete-container delete-card" onClick={handleDelete}>
-        <span className="material-symbols-outlined">delete</span>
-        Delete
-      </h3>
+      <div className="delete-comment-container">
+        <h3 className="comment-container delete-card" onClick={handleComment}>
+          <span className="material-symbols-outlined">add_comment</span>
+          Comment
+        </h3>
+        <h3 className="delete-container delete-card" onClick={handleDelete}>
+          <span className="material-symbols-outlined">delete</span>
+          Delete
+        </h3>
+      </div>
     </article>
   );
 };

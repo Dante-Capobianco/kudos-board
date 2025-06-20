@@ -11,6 +11,8 @@ const Modal = (props) => {
   const [gifTitle, setGifTitle] = useState("");
   const [gifURL, setGifURL] = useState("");
   const [cardAuthor, setCardAuthor] = useState("");
+  const [commentMessage, setCommentMessage] = useState("");
+  const [commentAuthor, setCommentAuthor] = useState("");
   const gifLimit = 12;
 
   const handleBoardSubmit = async (event) => {
@@ -46,7 +48,9 @@ const Modal = (props) => {
       if (cardAuthor) newCard.author = cardAuthor;
 
       const response = await fetch(
-        `${import.meta.env.VITE_BASE_URL}${props.PORT}${props.BOARD_ENDPOINT}/${props.selectedBoardId}${props.CARD_ENDPOINT}`,
+        `${import.meta.env.VITE_BASE_URL}${props.PORT}${props.BOARD_ENDPOINT}/${
+          props.selectedBoardId
+        }${props.CARD_ENDPOINT}`,
         {
           method: "POST",
           headers: {
@@ -64,6 +68,10 @@ const Modal = (props) => {
     }
   };
 
+  const handleCommentSubmit = async (event) => {
+    event.preventDefault();
+  };
+
   const exitModal = () => {
     if (props.modalToOpen === "Board") {
       setBoardTitle("");
@@ -76,6 +84,10 @@ const Modal = (props) => {
       setGifURL("");
       setGifOptions([]);
       setCardAuthor("");
+    } else if (props.modalToOpen === "Comment") {
+      props.setSelectedCardId(null);
+      setCommentMessage("");
+      setCommentAuthor("");
     }
     props.setModalToOpen("");
   };
@@ -105,27 +117,12 @@ const Modal = (props) => {
   const selectGif = (gifURL, gifTitle) => {
     setGifURL(gifURL);
     setGifTitle(gifTitle);
-  }
+  };
 
-  return (
-    <div
-      className="modal-container"
-      style={{ display: props.modalToOpen ? "flex" : "none" }}
-      onClick={(event) =>
-        event.target.className === "modal-container" ? exitModal() : null
-      }
-    >
-      <div className="modal">
-        <span
-          className="modal-exit material-symbols-outlined"
-          onClick={exitModal}
-        >
-          close
-        </span>
-
-        <h2 className="modal-title">{`Add ${props.modalToOpen}`}</h2>
-
-        {props.modalToOpen === "Board" ? (
+  const renderForm = () => {
+    switch (props.modalToOpen) {
+      case "Board":
+        return (
           <form
             className="modal-form"
             onSubmit={(event) => handleBoardSubmit(event)}
@@ -176,7 +173,9 @@ const Modal = (props) => {
               className="search-btn modal-btn"
             >{`Create ${props.modalToOpen}`}</button>
           </form>
-        ) : (
+        );
+      case "Card":
+        return (
           <form
             className="modal-form"
             onSubmit={(event) => handleCardSubmit(event)}
@@ -220,7 +219,9 @@ const Modal = (props) => {
                   src={gif?.images?.original?.url}
                   alt={gif.title}
                   className="gif-img"
-                  onClick={() => selectGif(gif?.images?.original?.url, gif.title)}
+                  onClick={() =>
+                    selectGif(gif?.images?.original?.url, gif.title)
+                  }
                 />
               ))}
             </section>
@@ -241,7 +242,63 @@ const Modal = (props) => {
               disabled={!gifTitle}
             >{`Create ${props.modalToOpen}`}</button>
           </form>
-        )}
+        );
+      case "Comment":
+        return (
+          <form
+            className="modal-form"
+            onSubmit={(event) => handleCommentSubmit(event)}
+          >
+            <label htmlFor="message">Message</label>
+            <input
+              id="message"
+              type="text"
+              className="text-input"
+              placeholder="Enter comment message"
+              value={commentMessage}
+              onChange={(event) => setCommentMessage(event.target.value)}
+              required
+            />
+
+            <label htmlFor="author">Author (optional)</label>
+            <input
+              id="author"
+              type="text"
+              className="text-input"
+              placeholder="Enter comment author"
+              value={commentAuthor}
+              onChange={(event) => setCommentAuthor(event.target.value)}
+            />
+
+            <button
+              type="submit"
+              className="search-btn modal-btn"
+            >{`Create ${props.modalToOpen}`}</button>
+          </form>
+        );
+      default:
+        return <></>;
+    }
+  };
+
+  return (
+    <div
+      className="modal-container"
+      style={{ display: props.modalToOpen ? "flex" : "none" }}
+      onClick={(event) =>
+        event.target.className === "modal-container" ? exitModal() : null
+      }
+    >
+      <div className="modal">
+        <span
+          className="modal-exit material-symbols-outlined"
+          onClick={exitModal}
+        >
+          close
+        </span>
+
+        <h2 className="modal-title">{`Add ${props.modalToOpen}`}</h2>
+        {renderForm()}
       </div>
     </div>
   );
