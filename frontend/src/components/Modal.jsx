@@ -89,8 +89,6 @@ const Modal = (props) => {
         }
       );
 
-      if (response.ok) props.fetchAllCards();
-
       exitModal();
     } catch (error) {
       exitModal();
