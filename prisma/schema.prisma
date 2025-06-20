@@ -29,7 +29,7 @@ model Card {
   upvotes Int @default(0)
   author String?
   pinned Boolean @default(false)
-  board Board @relation(fields: [boardId], references: [id])
+  board Board @relation(fields: [boardId], references: [id], onDelete: Cascade)
   boardId Int
   comments Comment[]
   createdAt DateTime @default(now())
@@ -40,6 +40,6 @@ model Comment {
   id Int @id @default(autoincrement())
   message String
   author String?
-  card Card @relation(fields: [cardId], references: [id])
+  card Card @relation(fields: [cardId], references: [id], onDelete: Cascade)
   cardId Int
 }

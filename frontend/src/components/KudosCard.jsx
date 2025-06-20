@@ -36,7 +36,7 @@ const KudosCard = (props) => {
     } catch (error) {}
   };
 
-  const handlePin = async (event) => {
+  const handlePin = async () => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BASE_URL}${props.PORT}${props.BOARD_ENDPOINT}/${
@@ -52,8 +52,25 @@ const KudosCard = (props) => {
           }),
         }
       );
+      if (response.ok) props.fetchAllCards();
+      
+    } catch (error) {}
+  };
+
+  const fetchCardDetails = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}${props.PORT}${props.BOARD_ENDPOINT}/${
+          props.boardId
+        }${props.CARD_ENDPOINT}/${props.id}`,
+        {
+          method: "GET",
+        }
+      );
       if (response.ok) {
-        props.fetchAllCards();
+        const data = await response.json();
+        props.setSelectedCardDetails(data);
+        props.setModalToOpen("Card Details");
       }
     } catch (error) {}
   };
@@ -64,12 +81,21 @@ const KudosCard = (props) => {
   };
 
   return (
-    <article className="board-card">
+    <article
+      className="board-card"
+      onClick={(event) =>
+        event.target.className.includes("board-img") ||
+        event.target.className.includes("board-card") ||
+        event.target.className.includes("board-title-card-message")
+          ? fetchCardDetails()
+          : null
+      }
+    >
       <span
         className={`${
           props.pinned ? "pinned" : ""
         } card-pin material-symbols-outlined`}
-        onClick={(event) => handlePin(event)}
+        onClick={handlePin}
       >
         keep
       </span>

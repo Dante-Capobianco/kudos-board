@@ -15,9 +15,19 @@ module.exports = {
     return allCards;
   },
 
+  async findById(id) {
+    const card = await prisma.card.findUnique({
+      where: { id: id },
+      include: {
+        comments: true,
+      },
+    });
+    return card;
+  },
+
   async updateUpvote(cardId, newUpvoteCount) {
     await prisma.card.update({
-      data: {upvotes: newUpvoteCount},
+      data: { upvotes: newUpvoteCount },
       where: { id: cardId },
     });
     return;
@@ -30,7 +40,7 @@ module.exports = {
 
   async updatePinnedStatus(cardId, newPinnedStatus) {
     await prisma.card.update({
-      data: {pinned: newPinnedStatus, updatedAt: new Date()},
+      data: { pinned: newPinnedStatus, updatedAt: new Date() },
       where: { id: cardId },
     });
     return;

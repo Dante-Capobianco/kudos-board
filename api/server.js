@@ -109,6 +109,16 @@ server.post("/board/:id/card/:cardId", async (req, res, next) => {
   }
 });
 
+server.get("/board/:id/card/:cardId", async (req, res, next) => {
+  const cardId = Number(req.params.cardId);
+  try {
+    const card = await Card.findById(cardId);
+    res.status(200).json(card);
+  } catch (err) {
+    next(err);
+  }
+});
+
 server.use("/", (req, res, next) => {
   next({ status: 404, message: "Endpoint not found" });
 });

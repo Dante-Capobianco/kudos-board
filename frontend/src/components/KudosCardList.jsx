@@ -34,6 +34,7 @@ const KudosCardList = (props) => {
             fetchAllCards={props.fetchAllCards}
             setModalToOpen={props.setModalToOpen}
             setSelectedCardId={props.setSelectedCardId}
+            setSelectedCardDetails={props.setSelectedCardDetails}
           />
         ))
       ) : (

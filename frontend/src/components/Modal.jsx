@@ -13,7 +13,7 @@ const Modal = (props) => {
   const [cardAuthor, setCardAuthor] = useState("");
   const [commentMessage, setCommentMessage] = useState("");
   const [commentAuthor, setCommentAuthor] = useState("");
-  const gifLimit = 12;
+  const GIF_LIMIT = 12;
 
   const handleBoardSubmit = async (event) => {
     event.preventDefault();
@@ -113,6 +113,8 @@ const Modal = (props) => {
       props.setSelectedCardId(null);
       setCommentMessage("");
       setCommentAuthor("");
+    } else if (props.modalToOpen === "Card Details") {
+      props.setSelectedCardDetails(null);
     }
     props.setModalToOpen("");
   };
@@ -124,7 +126,7 @@ const Modal = (props) => {
         const response = await fetch(
           `${import.meta.env.VITE_GIPHY_BASE_URL}?api_key=${
             import.meta.env.VITE_API_KEY
-          }&q=${gifSearch}&limit=${gifLimit}`
+          }&q=${gifSearch}&limit=${GIF_LIMIT}`
         );
 
         if (response.ok) {
@@ -301,6 +303,51 @@ const Modal = (props) => {
             >{`Create ${props.modalToOpen}`}</button>
           </form>
         );
+      case "Card Details":
+        return (
+          <section className="card-details-container">
+            <img
+              src={props.selectedCardDetails.gif}
+              alt={props.alt}
+              className="board-img"
+              style={{ height: "30vh" }}
+            />
+
+            <h3>
+              Message: <span>{props.selectedCardDetails.message}</span>
+            </h3>
+            {props.selectedCardDetails.author ? (
+              <h3>
+                Author: <span>{props.selectedCardDetails.author}</span>
+              </h3>
+            ) : (
+              <></>
+            )}
+
+            <h3 style={{ marginBottom: 0 }}>Comments:</h3>
+            {props.selectedCardDetails.comments.length > 0 ? (
+              props.selectedCardDetails.comments.map((comment, index) => (
+                <article
+                  className="card-details-comment"
+                  style={
+                    index === props.selectedCardDetails.comments.length - 1
+                      ? { border: "none" }
+                      : {}
+                  }
+                >
+                  <h4 style={{ margin: 0 }}>Message: {comment.message}</h4>
+                  {comment.author ? (
+                    <h4 style={{ margin: 0 }}>Author: {comment.author}</h4>
+                  ) : (
+                    <></>
+                  )}
+                </article>
+              ))
+            ) : (
+              <h4>No comments created - create one!</h4>
+            )}
+          </section>
+        );
       default:
         return <></>;
     }
@@ -322,7 +369,9 @@ const Modal = (props) => {
           close
         </span>
 
-        <h2 className="modal-title">{`Add ${props.modalToOpen}`}</h2>
+        <h2 className="modal-title">{`${
+          props.modalToOpen !== "Card Details" ? "Add " : ""
+        }${props.modalToOpen}`}</h2>
         {renderForm()}
       </div>
     </div>
