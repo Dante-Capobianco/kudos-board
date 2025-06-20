@@ -5,10 +5,15 @@ const Board = require("./board-model");
 const Card = require("./card-model");
 const Comment = require("./comment-model");
 
+const corsOptions = {
+  origin: /\.onrender\.com$/,
+  methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+};
+
 const server = express();
 server.use(helmet());
 server.use(express.json());
-server.use(cors());
+server.use(cors(corsOptions));
 
 server.post("/board", async (req, res, next) => {
   const newBoard = req.body;
