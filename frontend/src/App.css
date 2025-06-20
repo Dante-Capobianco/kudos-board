@@ -401,3 +401,35 @@ footer {
   color: rgb(78, 78, 78);
   font-variation-settings: "FILL" 100;
 }
+
+.delete-comment-container {
+  display: flex;
+  gap: 20px;
+}
+
+.comment-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: darkgreen;
+}
+
+.comment-container:hover,
+.comment-container:focus {
+  cursor: pointer;
+  color: rgb(0, 122, 0);
+}
+
+.card-details-container {
+  margin: 0 10px 20px 20px;
+  width: 90%;
+}
+
+.card-details-comment {
+  display: flex;
+  gap: 40px;
+  flex-wrap: wrap;
+  border-bottom: 2px solid gray;
+  width: 100%;
+  padding: 20px 0 20px 0;
+}

@@ -36,7 +36,7 @@ const KudosCard = (props) => {
     } catch (error) {}
   };
 
-  const handlePin = async (event) => {
+  const handlePin = async () => {
     try {
       const response = await fetch(
         `${import.meta.env.VITE_BASE_URL}${props.PORT}${props.BOARD_ENDPOINT}/${
@@ -52,19 +52,50 @@ const KudosCard = (props) => {
           }),
         }
       );
+      if (response.ok) props.fetchAllCards();
+      
+    } catch (error) {}
+  };
+
+  const fetchCardDetails = async () => {
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_BASE_URL}${props.PORT}${props.BOARD_ENDPOINT}/${
+          props.boardId
+        }${props.CARD_ENDPOINT}/${props.id}`,
+        {
+          method: "GET",
+        }
+      );
       if (response.ok) {
-        props.fetchAllCards();
+        const data = await response.json();
+        props.setSelectedCardDetails(data);
+        props.setModalToOpen("Card Details");
       }
     } catch (error) {}
   };
 
+  const handleComment = () => {
+    props.setSelectedCardId(props.id);
+    props.setModalToOpen("Comment");
+  };
+
   return (
-    <article className="board-card">
+    <article
+      className="board-card"
+      onClick={(event) =>
+        event.target.className.includes("board-img") ||
+        event.target.className.includes("board-card") ||
+        event.target.className.includes("board-title-card-message")
+          ? fetchCardDetails()
+          : null
+      }
+    >
       <span
         className={`${
           props.pinned ? "pinned" : ""
         } card-pin material-symbols-outlined`}
-        onClick={(event) => handlePin(event)}
+        onClick={handlePin}
       >
         keep
       </span>
@@ -80,10 +111,16 @@ const KudosCard = (props) => {
         <span className="material-symbols-outlined">thumb_up</span> Upvote:{" "}
         {props.upvotes}
       </h3>
-      <h3 className="delete-container delete-card" onClick={handleDelete}>
-        <span className="material-symbols-outlined">delete</span>
-        Delete
-      </h3>
+      <div className="delete-comment-container">
+        <h3 className="comment-container delete-card" onClick={handleComment}>
+          <span className="material-symbols-outlined">add_comment</span>
+          Comment
+        </h3>
+        <h3 className="delete-container delete-card" onClick={handleDelete}>
+          <span className="material-symbols-outlined">delete</span>
+          Delete
+        </h3>
+      </div>
     </article>
   );
 };
